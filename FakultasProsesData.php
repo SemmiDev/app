@@ -42,7 +42,7 @@ if ($act == 'create') {
 if ($act == 'update') {
     $id = $_POST['id'];
     $nama = $_POST['nama'];
-    
+
     try {
         $req = new FakultasEntity();
         $req->id = $id;

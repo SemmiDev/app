@@ -2,7 +2,7 @@
     <div class="sticky top-0 p-4 bg-gray-100 rounded-xl w-full">
         <ul class="flex sm:flex-col overflow-hidden content-center justify-between">
             <li class="py-2 hover:bg-indigo-300 rounded">
-                <a class="truncate" href="#">
+                <a class="truncate" href="index.php">
                     <img src="//cdn.jsdelivr.net/npm/heroicons@1.0.1/outline/home.svg" class="w-7 sm:mx-2 mx-4 inline"/>
                     <span class="hidden sm:inline">Home</span>
                 </a>
@@ -14,7 +14,7 @@
                 </a>
             </li>       
             <li class="py-2 hover:bg-indigo-300 rounded">
-                <a class="truncate" href="jurusan.php">
+                <a class="truncate" href="Jurusan.php">
                     <img src="//cdn.jsdelivr.net/npm/heroicons@1.0.6/outline/academic-cap.svg" class="w-7 sm:mx-2 mx-4 inline"/>
                     <span class="hidden sm:inline">Jurusan</span>
                 </a>

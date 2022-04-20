@@ -6,14 +6,19 @@ use Modules\Fakultas\Entity\FakultasEntity;
 use Modules\Fakultas\Repository\FakultasRepository;
 use Modules\Exception\ValidationException;
 use Config\Database;
+use Modules\Jurusan\Repository\JurusanRepository;
 
 class FakultasService
 {
     private FakultasRepository $fakultasRepository;
+    private JurusanRepository $jurusanRepository;
 
-    public function __construct(FakultasRepository $fakultasRepository)
+    public function __construct(
+        FakultasRepository $fakultasRepository,
+        JurusanRepository $jurusanRepository)
     {
         $this->fakultasRepository = $fakultasRepository;
+        $this->jurusanRepository = $jurusanRepository;
     }
 
     public function create(FakultasEntity $req): FakultasEntity
@@ -80,14 +85,14 @@ class FakultasService
     {
         try {
             Database::beginTransaction();
-            $user = $this->fakultasRepository->findById($id);
-            if ($user == null) {
+            $fak = $this->fakultasRepository->findById($id);
+            if ($fak == null) {
                 throw new ValidationException("id Fakultas tidak ada");
             }
 
             $fakultas = new FakultasEntity();
-            $fakultas->id = $user->id;
-            $fakultas->nama = $user->nama;
+            $fakultas->id = $fak->id;
+            $fakultas->nama = $fak->nama;
 
             Database::commitTransaction();
             return $fakultas;
