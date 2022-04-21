@@ -10,7 +10,6 @@ $act = $_GET['act'];
 
 if ($act == 'delete') {
     $id = $_GET['id'];
-    var_dump($id);
 
     try {
         $jurusanService->delete($id);

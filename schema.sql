@@ -52,31 +52,6 @@ CREATE TABLE IF NOT EXISTS users (
     FOREIGN KEY (role) REFERENCES roles(id_role) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS mahasiswa (
-    id_mahasiswa INT(11) NOT NULL AUTO_INCREMENT,
-    nim VARCHAR(10) UNIQUE NOT NULL,
-    nama_depan VARCHAR(50) NOT NULL,
-    nama_belakang VARCHAR(50),
-    total_sks INT(11) NOT NULL,
-    semester INT(2) NOT NULL,
-    email VARCHAR(120) UNIQUE NOT NULL,
-    status INT(1) NOT NULL,
-    jenjang VARCHAR(50) NOT NULL,
-    jenis_kelamin VARCHAR(10) NOT NULL,
-    ttl DATE NOT NULL,
-    alamat VARCHAR(120) NOT NULL,
-    id_jurusan INT(11) NOT NULL,
-    PRIMARY KEY (id_mahasiswa),
-    FOREIGN KEY (id_jurusan) REFERENCES jurusan(id_jurusan) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-CREATE TABLE IF NOT EXISTS ruangan (
-    id_ruangan INT(11) NOT NULL AUTO_INCREMENT,
-    nama_ruangan VARCHAR(50) NOT NULL,
-    kapasitas INT(11) NOT NULL,
-    lantai INT(11) NOT NULL,
-    PRIMARY KEY (id_ruangan)
-);
 
 CREATE TABLE IF NOT EXISTS dosen (
     id_dosen INT(11) NOT NULL AUTO_INCREMENT,
@@ -85,9 +60,42 @@ CREATE TABLE IF NOT EXISTS dosen (
     nama_belakang VARCHAR(50),
     email VARCHAR(120) UNIQUE NOT NULL,
     jenis_kelamin VARCHAR(10) NOT NULL,
-    ttl DATE NOT NULL,
+    no_telp VARCHAR(50) NOT NULL,
+    no_hp VARCHAR(50) NOT NULL,
+    golongan_pns VARCHAR(50) NOT NULL,
+    status VARCHAR(50) NOT NULL,
     alamat VARCHAR(120) NOT NULL,
     PRIMARY KEY (id_dosen)
+);
+
+CREATE TABLE IF NOT EXISTS mahasiswa (
+    id_mahasiswa INT(11) NOT NULL AUTO_INCREMENT,
+    nim VARCHAR(10) UNIQUE NOT NULL,
+    nama_depan VARCHAR(50) NOT NULL,
+    nama_belakang VARCHAR(50),
+    email VARCHAR(120) UNIQUE NOT NULL,
+    jenis_kelamin VARCHAR(10) NOT NULL,
+    agama VARCHAR(50) NOT NULL,
+    jenjang VARCHAR(50) NOT NULL,
+    tanggal_lahir DATE NOT NULL,
+    no_hp VARCHAR(15) NOT NULL,
+    status VARCHAR(50) NOT NULL,
+    total_sks INT(11) NOT NULL,
+    semester INT(2) NOT NULL,
+    alamat VARCHAR(120) NOT NULL,
+    id_jurusan INT(11) NOT NULL,
+    id_dosen_pa INT(11),
+    PRIMARY KEY (id_mahasiswa),
+    FOREIGN KEY (id_jurusan) REFERENCES jurusan(id_jurusan) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_dosen_pa) REFERENCES dosen(id_dosen) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS ruangan (
+    id_ruangan INT(11) NOT NULL AUTO_INCREMENT,
+    nama_ruangan VARCHAR(50) NOT NULL,
+    kapasitas INT(11) NOT NULL,
+    lantai INT(11) NOT NULL,
+    PRIMARY KEY (id_ruangan)
 );
 
 CREATE TABLE IF NOT EXISTS matakuliah (

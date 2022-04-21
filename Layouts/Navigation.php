@@ -1,4 +1,4 @@
-<div class="sm:w-1/3 md:1/4 w-full flex-shrink flex-grow-0 p-4 mt-4">
+<div class="sm:w-1/5 md:h-1/6 w-full flex-shrink flex-grow-0 p-4 mt-4">
     <div class="sticky top-0 p-4 bg-gray-100 rounded-xl w-full">
         <ul class="flex sm:flex-col overflow-hidden content-center justify-between">
             <li class="py-2 hover:bg-indigo-300 rounded">
@@ -19,6 +19,12 @@
                     <span class="hidden sm:inline">Jurusan</span>
                 </a>
             </li>
+            <li class="py-2 hover:bg-indigo-300 rounded">
+                <a class="truncate" href="Dosen.php">
+                    <img src="//cdn.jsdelivr.net/npm/heroicons@1.0.6/outline/user.svg" class="w-7 sm:mx-2 mx-4 inline"/>
+                    <span class="hidden sm:inline">Dosen</span>
+                </a>
+            </li> 
             <li class="py-2 hover:bg-indigo-300 rounded">
                 <a class="truncate" href="mahasiswa.php">
                     <img src="//cdn.jsdelivr.net/npm/heroicons@1.0.6/outline/user-group.svg" class="w-7 sm:mx-2 mx-4 inline"/>
