@@ -9,3 +9,13 @@
     <link rel="stylesheet" href="../style.css">
 </head>
 <body class="bg-slate-100">
+<header class="bg-white shadow">
+    <div class="container mx-auto flex justify-between items-center py-4 sm:py-4 px-4">
+        <div class="flex items-center">
+            <a href="/" class="text-2xl font-semibold text-gray-800 no-underline">
+                <img src="../Assets/Images/riau.png" alt="logo" class="h-8">
+            </a>
+            <span class="ml-2 text-gray-600 text-md">Manajemen Akademik <span class="font-bold">Universitas Riau</span></span>
+        </div>
+    </div>
+</header>

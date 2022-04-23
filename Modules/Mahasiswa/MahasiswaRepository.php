@@ -12,7 +12,7 @@ class MahasiswaRepository {
         $this->connection = $connection;
     }
 
-    public function totalMahasiswaInJurusan(int $jurusanId): int
+    public function totalMahasiswaInJurusanId(int $jurusanId): int
     {
         $sql = "SELECT COUNT(*) FROM mahasiswa WHERE id_jurusan = :jurusanId";
         $stmt = $this->connection->prepare($sql);
@@ -23,7 +23,7 @@ class MahasiswaRepository {
 
     public function save(MahasiswaEntity $mhs): MahasiswaEntity
     {
-        $statement = $this->connection->prepare("INSERT INTO mahasiswa(nim,nama_depan,nama_belakang,email,jenis_kelamin,agama,jenjang,tanggal_lahir,no_hp, status, total_sks, semester, alamat, id_jurusan, id_dosen_pa) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,)");
+        $statement = $this->connection->prepare("INSERT INTO mahasiswa(nim, nama_depan, nama_belakang, email, jenis_kelamin, agama, jenjang, tanggal_lahir, no_hp, status, total_sks, semester, alamat, id_jurusan, id_dosen_pa) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
         $statement->execute(
             [
                 $mhs->nim,
@@ -85,7 +85,7 @@ class MahasiswaRepository {
             $mhs->jenjang = $row['jenjang'];
             $mhs->tanggalLahir = $row['tanggal_lahir'];
             $mhs->noHP = $row['no_hp'];
-            $mhs->stat = $row['status'];
+            $mhs->status = $row['status'];
             $mhs->totalSKS = $row['total_sks'];
             $mhs->semester = $row['semester'];
             $mhs->alamat = $row['alamat'];

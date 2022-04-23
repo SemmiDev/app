@@ -48,24 +48,10 @@ class DosenService
     {
         try {
             Database::beginTransaction();
-
-            $dosen = new DosenEntity();
-            $dosen->id = $req->id;
-            $dosen->nip = $req->nip;
-            $dosen->namaDepan = $req->namaDepan;
-            $dosen->namaBelakang = $req->namaBelakang;
-            $dosen->golonganPNS = $req->golonganPNS;
-            $dosen->status = $req->status;
-            $dosen->email = $req->email;
-            $dosen->jenisKelamin = $req->jenisKelamin;
-            $dosen->noTelp = $req->noTelp;
-            $dosen->noHP = $req->noHP;
-            $dosen->alamat = $req->alamat;
-
-            $this->dosenRepository->update($dosen);
+            $this->dosenRepository->update($req);
             
             Database::commitTransaction();
-            return $dosen;
+            return $req;
         } catch (\Exception $exception) {
             Database::rollbackTransaction();
             throw $exception;

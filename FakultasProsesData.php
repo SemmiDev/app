@@ -13,11 +13,11 @@ if ($act == 'delete') {
     try {
         $fakultasService->delete($id);
         $msg = "Fakultas berhasil dihapus";
-        setcookie('success', $msg, time() + 3600);
+        setcookie('success', $msg, time() + 5);
         header('Location: Fakultas.php');
     } catch (\Exception $exception) {
         $msg = "Gagal menghapus data $exception";
-        setcookie('error', $msg, time() + 3600);
+        setcookie('error', $msg, time() + 5);
         header('Location: Fakultas.php');
     }
 }
@@ -30,11 +30,11 @@ if ($act == 'create') {
         $req->nama = $nama;
         $fakultasService->create($req);
         $msg = "Fakultas berhasil ditambahkan";
-        setcookie('success', $msg, time() + 3600);
+        setcookie('success', $msg, time() + 5);
         header('Location: Fakultas.php');
     } catch (\Exception $exception) {
         $msg = "Gagal menambahkan data $exception";
-        setcookie('error', $msg, time() + 3600);
+        setcookie('error', $msg, time() + 5);
         header('Location: Fakultas.php');
     }
 }
@@ -50,11 +50,11 @@ if ($act == 'update') {
 
         $fakultasService->update($req);
         $msg = "Fakultas berhasil di update";
-        setcookie('success', $msg, time() + 3600);
+        setcookie('success', $msg, time() + 5);
         header('Location: Fakultas.php');
     } catch (\Exception $exception) {
         $msg = "Gagal update data $exception";
-        setcookie('error', $msg, time() + 3600);
+        setcookie('error', $msg, time() + 5);
         header('Location: Fakultas.php');
     }
 }

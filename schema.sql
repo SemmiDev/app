@@ -68,6 +68,9 @@ CREATE TABLE IF NOT EXISTS dosen (
     PRIMARY KEY (id_dosen)
 );
 
+INSERT INTO dosen (id_dosen, nip, nama_depan, nama_belakang, email, jenis_kelamin, no_telp, no_hp, golongan_pns, status, alamat) 
+VALUES (1, '123456789', 'Dian', 'Surya', 'dian@gmail.com', 'Laki-Laki', '08123456789', '08123456789', 'PNS', 'PNS', 'Jl. Jendral Sudirman No. 1');
+
 CREATE TABLE IF NOT EXISTS mahasiswa (
     id_mahasiswa INT(11) NOT NULL AUTO_INCREMENT,
     nim VARCHAR(10) UNIQUE NOT NULL,
@@ -77,24 +80,30 @@ CREATE TABLE IF NOT EXISTS mahasiswa (
     jenis_kelamin VARCHAR(10) NOT NULL,
     agama VARCHAR(50) NOT NULL,
     jenjang VARCHAR(50) NOT NULL,
-    tanggal_lahir DATE NOT NULL,
+    tanggal_lahir VARCHAR(10) NOT NULL,
     no_hp VARCHAR(15) NOT NULL,
     status VARCHAR(50) NOT NULL,
     total_sks INT(11) NOT NULL,
     semester INT(2) NOT NULL,
     alamat VARCHAR(120) NOT NULL,
     id_jurusan INT(11) NOT NULL,
-    id_dosen_pa INT(11),
+    id_dosen_pa INT(11) DEFAULT NULL,
     PRIMARY KEY (id_mahasiswa),
     FOREIGN KEY (id_jurusan) REFERENCES jurusan(id_jurusan) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (id_dosen_pa) REFERENCES dosen(id_dosen) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
+INSERT INTO mahasiswa (id_mahasiswa, nim, nama_depan, nama_belakang, email, jenis_kelamin, agama, jenjang, tanggal_lahir, no_hp, status, total_sks, semester, alamat, id_jurusan, id_dosen_pa)
+VALUES (1, '123456789', 'Dian', 'Surya', 'SAM', 'Laki-Laki', 'Islam', 'S1', '1999-01-01', '08123456789', 'Mahasiswa', '0', '1', 'Jl. Jendral Sudirman No. 1', 1, 1);
+
 CREATE TABLE IF NOT EXISTS ruangan (
     id_ruangan INT(11) NOT NULL AUTO_INCREMENT,
-    nama_ruangan VARCHAR(50) NOT NULL,
+    nama VARCHAR(50) NOT NULL,
+    jenis VARCHAR(50) NOT NULL,
     kapasitas INT(11) NOT NULL,
     lantai INT(11) NOT NULL,
+    latitude VARCHAR(50) NOT NULL,
+    longitude VARCHAR(50) NOT NULL,
     PRIMARY KEY (id_ruangan)
 );
 

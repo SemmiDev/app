@@ -2,7 +2,6 @@
 
 namespace Modules\Mahasiswa\Entity;
 
-use DateTime;
 use Modules\Dosen\Entity\DosenEntity;
 use Modules\Jurusan\Entity\JurusanEntity;
 
@@ -15,7 +14,7 @@ class MahasiswaEntity {
     public string $jenisKelamin;
     public string $agama;
     public string $jenjang;
-    public DateTime $tanggalLahir;
+    public string $tanggalLahir;
     public string $noHP;
     public string $alamat;
 
@@ -35,7 +34,7 @@ class MahasiswaEntityDetails {
     public string $jenisKelamin;
     public string $agama;
     public string $jenjang;
-    public DateTime $tanggalLahir;
+    public string $tanggalLahir;
     public string $noHP;
     public string $alamat;
     public string $status;
@@ -49,10 +48,9 @@ class MahasiswaEntityDetails {
     public DosenEntity $dosenPA;
 
     public function __construct(MahasiswaEntity $mahasiswa, JurusanEntity $jurusan, DosenEntity $dosenPA) {
-        $this->id = $mahasiswa->id;
         $this->nim = $mahasiswa->nim;
-        $this->nama_depan = $mahasiswa->nama_depan;
-        $this->nama_belakang = $mahasiswa->nama_belakang;
+        $this->namaDepan = $mahasiswa->namaDepan;
+        $this->namaBelakang = $mahasiswa->namaBelakang;
         $this->email = $mahasiswa->email;
         $this->jenisKelamin = $mahasiswa->jenisKelamin;
         $this->agama = $mahasiswa->agama;

@@ -26,9 +26,15 @@
                 </a>
             </li> 
             <li class="py-2 hover:bg-indigo-300 rounded">
-                <a class="truncate" href="mahasiswa.php">
+                <a class="truncate" href="Mahasiswa.php">
                     <img src="//cdn.jsdelivr.net/npm/heroicons@1.0.6/outline/user-group.svg" class="w-7 sm:mx-2 mx-4 inline"/>
                     <span class="hidden sm:inline">Mahasiswa</span>
+                </a>
+            </li>
+            <li class="py-2 hover:bg-indigo-300 rounded">
+                <a class="truncate" href="Ruangan.php">
+                    <img src="//cdn.jsdelivr.net/npm/heroicons@1.0.6/outline/library.svg" class="w-7 sm:mx-2 mx-4 inline"/>
+                    <span class="hidden sm:inline">Ruangan</span>
                 </a>
             </li>
         </ul>

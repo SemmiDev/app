@@ -14,7 +14,7 @@ class DosenRepository {
 
     public function save(DosenEntity $dosen): DosenEntity
     {
-        $statement = $this->connection->prepare("INSERT INTO dosen(nip,nama_depan,nama_belakang,email,jenis_kelamin, no_telp, no_hp, golongan_pns, status, alamat) VALUES (?,?,?,?,?,?,?,?,?,?)");
+        $statement = $this->connection->prepare("INSERT INTO dosen(nip,nama_depan,nama_belakang,email,jenis_kelamin, no_telp, no_hp, golongan_pns, 'status', alamat) VALUES (?,?,?,?,?,?,?,?,?,?)");
         $statement->execute([
                 $dosen->nip,
                 $dosen->namaDepan,

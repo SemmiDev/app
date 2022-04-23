@@ -109,5 +109,4 @@
         </div>
     </main>
 </div>
-<?php // include('./Layouts/footer.php'); 
-?>
+<?php include('./Layouts/Footer.php'); ?>

@@ -12,6 +12,15 @@ class JurusanRepository {
         $this->connection = $connection;
     }
 
+    public function totalMahasiswaInJurusanId(int $id): int
+    {
+        $sql = "SELECT COUNT(*) FROM mahasiswa WHERE id_jurusan = :id";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+        return $stmt->fetchColumn();
+    }
+
     public function totalJurusanInFakultas(int $fakultasId): int
     {
         $sql = "SELECT COUNT(*) FROM jurusan WHERE id_fakultas = :fakultasId";

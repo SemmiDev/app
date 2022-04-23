@@ -32,16 +32,14 @@ if ($act == 'create') {
     $req->status = $status;
     $req->jenisKelamin = $jenisKelamin;
 
-    var_dump($req);
-
     try {
         $dosenService->create($req);
         $msg = "Dosen berhasil ditambahkan";
-        setcookie('success', $msg, time() + 3600);
+        setcookie('success', $msg, time() + 5);
         header('Location: Dosen.php');
     } catch (\Exception $exception) {
         $msg = "Gagal menambahkan data $exception";
-        setcookie('error', $msg, time() + 3600);
+        setcookie('error', $msg, time() + 5);
         header('Location: Dosen.php');
     }
 }
@@ -52,11 +50,11 @@ if ($act == 'delete') {
     try {
         $dosenService->delete($id);
         $msg = "Dosen berhasil dihapus";
-        setcookie('success', $msg, time() + 3600);
+        setcookie('success', $msg, time() + 5);
         header('Location: Dosen.php');
     } catch (\Exception $exception) {
         $msg = "Gagal menghapus data $exception";
-        setcookie('error', $msg, time() + 3600);
+        setcookie('error', $msg, time() + 5);
         header('Location: Dosen.php');
     }
 }
@@ -74,27 +72,27 @@ if ($act == 'update') {
     $status = $_POST['status'];
     $jenisKelamin = $_POST['jenisKelamin'];
 
-    try {
-        $req = new DosenEntity();
-        $req->id = $id;
-        $req->nip = $nip;
-        $req->namaDepan = $namaDepan;
-        $req->namaBelakang = $namaBelakang;
-        $req->golonganPNS = $golonganPNS;
-        $req->alamat = $alamat;
-        $req->email = $email;
-        $req->noTelp = $noTelp;
-        $req->noHP = $noHP;
-        $req->status = $status;
-        $req->jenisKelamin = $jenisKelamin;
+    $req = new DosenEntity();
+    $req->id = $id;
+    $req->nip = $nip;
+    $req->namaDepan = $namaDepan;
+    $req->namaBelakang = $namaBelakang;
+    $req->golonganPNS = $golonganPNS;
+    $req->alamat = $alamat;
+    $req->email = $email;
+    $req->noTelp = $noTelp;
+    $req->noHP = $noHP;
+    $req->status = $status;
+    $req->jenisKelamin = $jenisKelamin;
 
+    try {
         $dosenService->update($req);
         $msg = "Dosen berhasil di update";
-        setcookie('success', $msg, time() + 3600);
+        setcookie('success', $msg, time() + 5);
         header('Location: Dosen.php');
     } catch (\Exception $exception) {
         $msg = "Gagal update data $exception";
-        setcookie('error', $msg, time() + 3600);
+        setcookie('error', $msg, time() + 5);
         header('Location: Dosen.php');
     }
 }

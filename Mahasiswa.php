@@ -2,11 +2,11 @@
 <div class="w-full flex flex-col sm:flex-row flex-grow overflow-hidden">
     <?php include('./Layouts/Navigation.php'); ?>
     <main role="main" class="w-full h-full flex-grow p-3 overflow-auto mt-4">
-        <h1 class="text-3xl md:text-5xl font-extrabold mb-5" id="home">Data Jurusan</h1>
+        <h1 class="text-3xl md:text-5xl font-extrabold mb-5" id="home">Data Mahasiswa</h1>
 
         <?php
-        require_once 'App.php';
-        $dataJurusan = $jurusanService->findAll();
+            require_once 'App.php';
+            $dataMhs = $mahasiswaService->findAll();
         ?>
 
         <div class="container">
@@ -45,12 +45,12 @@
             </script>
 
             <div class="flex mb-5">
-                <a href="./JurusanPageTambahData.php" class="bg-blue-500 hover:bg-blue-700 text-slate-50 font-bold py-2 px-3 rounded">
+                <a href="./MahasiswaPageTambahData.php" class="bg-blue-500 hover:bg-blue-700 text-slate-50 font-bold py-2 px-3 rounded">
                     Tambah Data
                 </a>
             </div>
 
-            <?php if (count($dataJurusan) == 0) { ?>
+            <?php if (count($dataMhs) == 0) { ?>
                 <div class="bg-green-200 text-slate-900 px-4 py-3 rounded relative mb-5 w-2/3" id="div-error" role="alert">
                     <span class="block sm:inline">Ups! Data Kosong</span>
                 </div>
@@ -61,36 +61,56 @@
                         <thead>
                             <tr>
                                 <th class="px-4 py-2">No</th>
-                                <th class="px-4 py-2">Nama Jurusan</th>
-                                <th class="px-4 py-2">Akreditasi</th>
+                                <th class="px-4 py-2">NIM</th>
+                                <th class="px-4 py-2">Nama Depan</th>
+                                <th class="px-4 py-2">Nama Belakang</th>
+                                <th class="px-4 py-2">Email</th>
+                                <th class="px-4 py-2">Jenis Kelamin</th>
+                                <th class="px-4 py-2">Agama</th>
                                 <th class="px-4 py-2">Jenjang</th>
-                                <th class="px-4 py-2">Fakultas</th>
-                                <th class="px-4 py-2">Total Mahasiswa</th>
+                                <th class="px-4 py-2">Tanggal Lahir</th>
+                                <th class="px-4 py-2">No HP</th>
+                                <th class="px-4 py-2">Alamat</th>
+                                <th class="px-4 py-2">Status</th>
+                                <th class="px-4 py-2">Total SKS</th>
+                                <th class="px-4 py-2">Semester</th>
+                                <th class="px-4 py-2">Jurusan</th>
+                                <th class="px-4 py-2">Dosen PA</th>
                                 <th class="px-4 py-2">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $i = 1; ?>
-                            <?php foreach ($dataJurusan as $jurusan) : ?>
+                            <?php
+                            $no = 1;
+                            foreach ($dataMhs as $mhs) : ?>
                                 <tr>
-                                    <td class="border px-4 py-2"><?= $i ?></td>
-                                    <td class="border px-4 py-2"><?= $jurusan->nama ?></td>
-                                    <td class="border px-4 py-2"><?= $jurusan->akreditasi ?></td>
-                                    <td class="border px-4 py-2"><?= $jurusan->jenjang ?></td>
-                                    <td class="border px-4 py-2"><?= $jurusan->fakultas->nama ?></td>
-                                    <td class="border px-4 py-2"><?= $jurusanService->totalMahasiswaInJurusanId($jurusan->id)  . ' orang' ?></td>
+                                    <td class="border px-4 py-2"><?= $no++ ?></td>
+                                    <td class="border px-4 py-2"><?= $mhs->nim ?></td>
+                                    <td class="border px-4 py-2"><?= $mhs->namaDepan ?></td>
+                                    <td class="border px-4 py-2"><?= $mhs->namaBelakang ?></td>
+                                    <td class="border px-4 py-2"><?= $mhs->email ?></td>
+                                    <td class="border px-4 py-2"><?= $mhs->jenisKelamin ?></td>
+                                    <td class="border px-4 py-2"><?= $mhs->agama ?></td>
+                                    <td class="border px-4 py-2"><?= $mhs->jenjang ?></td>
+                                    <td class="border px-4 py-2"><?= $mhs->tanggalLahir ?></td>
+                                    <td class="border px-4 py-2"><?= $mhs->noHP ?></td>
+                                    <td class="border px-4 py-2"><?= $mhs->alamat ?></td>
+                                    <td class="border px-4 py-2"><?= $mhs->status ?></td>
+                                    <td class="border px-4 py-2"><?= $mhs->totalSKS ?></td>
+                                    <td class="border px-4 py-2"><?= $mhs->semester ?></td>
+                                    <td class="border px-4 py-2"><?= $mhs->jurusan->nama ?></td>
+                                    <td class="border px-4 py-2"><?= $mhs->dosenPA->namaDepan . ' ' . $mhs->dosenPA->namaBelakang ?></td>
                                     <td class="border px-4 py-2">
                                         <div class="flex">
-                                            <a href="./JurusanPageEditData.php?id=<?= $jurusan->id ?>" class="bg-green-500 hover:bg-green-700 text-slate-50 font-bold py-2 px-3 rounded mr-2">
+                                            <a href="./MahasiswaPageEditData.php?id=<?= $mhs->id ?>" class="bg-green-500 hover:bg-green-700 text-slate-50 font-bold py-2 px-3 rounded mr-2">
                                                 Edit
                                             </a>
-                                            <a href="./JurusanProsesData.php?act=delete&id=<?= $jurusan->id ?>" class="bg-red-500 hover:bg-red-700 text-slate-50 font-bold py-2 px-3 rounded">
+                                            <a href="./MahasiswaProsesData.php?act=delete&id=<?= $mhs->id ?>" class="bg-red-500 hover:bg-red-700 text-slate-50 font-bold py-2 px-3 rounded">
                                                 Hapus
                                             </a>
                                         </div>
                                     </td>
                                 </tr>
-                                <?php $i++; ?>
                             <?php endforeach; ?>
                         </tbody>
                     </table>

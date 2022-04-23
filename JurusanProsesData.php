@@ -14,11 +14,11 @@ if ($act == 'delete') {
     try {
         $jurusanService->delete($id);
         $msg = "Jurusan berhasil dihapus";
-        setcookie('success', $msg, time() + 3600);
+        setcookie('success', $msg, time() + 5);
         header('Location: Jurusan.php');
     } catch (\Exception $exception) {
         $msg = "Gagal menghapus data $exception";
-        setcookie('error', $msg, time() + 3600);
+        setcookie('error', $msg, time() + 5);
         header('Location: Jurusan.php');
     }
 }
@@ -38,11 +38,11 @@ if ($act == 'create') {
 
         $jurusanService->create($req);
         $msg = "Jurusan berhasil ditambahkan";
-        setcookie('success', $msg, time() + 3600);
+        setcookie('success', $msg, time() + 5);
         header('Location: Jurusan.php');
     } catch (\Exception $exception) {
         $msg = "Gagal menambahkan data $exception";
-        setcookie('error', $msg, time() + 3600);
+        setcookie('error', $msg, time() + 5);
         header('Location: Jurusan.php');
     }
 }
@@ -64,11 +64,11 @@ if ($act == 'update') {
 
         $jurusanService->update($req);
         $msg = "Jurusan berhasil di update";
-        setcookie('success', $msg, time() + 3600);
+        setcookie('success', $msg, time() + 5);
         header('Location: Jurusan.php');
     } catch (\Exception $exception) {
         $msg = "Gagal update data $exception";
-        setcookie('error', $msg, time() + 3600);
+        setcookie('error', $msg, time() + 5);
         header('Location: Jurusan.php');
     }
 }

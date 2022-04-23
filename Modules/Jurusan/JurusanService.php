@@ -8,19 +8,26 @@ use Modules\Exception\ValidationException;
 use Config\Database;
 use Modules\Fakultas\Repository\FakultasRepository;
 use Modules\Jurusan\Entity\JurusanEntityDetails;
+use Modules\Mahasiswa\Repository\MahasiswaRepository;
 
 class JurusanService
 {
     private JurusanRepository $jurusanRepository;
     private FakultasRepository $fakultasRepository;
 
-    public function __construct(JurusanRepository $jurusanRepository, FakultasRepository $fakultasRepository)
+    public function __construct(
+        JurusanRepository $jurusanRepository, 
+        FakultasRepository $fakultasRepository)
     {
         $this->jurusanRepository = $jurusanRepository;
         $this->fakultasRepository = $fakultasRepository;
     }
 
-    public function totalJurusan(int $id): int
+    public function totalMahasiswaInJurusanId(int $id) {
+        return $this->jurusanRepository->totalMahasiswaInJurusanId($id);
+    }
+
+    public function totalJurusanInFakultasId(int $id): int
     {
         return $this->jurusanRepository->totalJurusanInFakultas($id);
     }
