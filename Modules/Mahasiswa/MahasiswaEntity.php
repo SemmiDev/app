@@ -2,52 +2,66 @@
 
 namespace Modules\Mahasiswa\Entity;
 
-use Modules\Dosen\Entity\DosenEntity;
-use Modules\Jurusan\Entity\JurusanEntity;
-
 class MahasiswaEntity {
-    public int $id;
-    public string $nim;
-    public string $namaDepan;
-    public string $namaBelakang;
-    public string $email;
-    public string $jenisKelamin;
-    public string $agama;
-    public string $jenjang;
-    public string $tanggalLahir;
-    public string $noHP;
-    public string $alamat;
+    public $id;
+    public $nim;
+    public $namaDepan;
+    public $namaBelakang;
+    public $email;
+    public $jenisKelamin;
+    public $agama;
+    public $jenjang;
+    public $tanggalLahir;
+    public $noHP;
+    public $alamat;
 
-    public string $status = "aktif";
-    public int $totalSKS = 0;
-    public int $semester = 1;
-    public int $idJurusan;
-    public int $idDosenPA;
+    public $status = "aktif";
+    public $totalSKS = 0;
+    public $semester = 1;
+
+    public $idJurusan;
+    public $idDosenPA;
 }
 
 class MahasiswaEntityDetails {
-    public int $id;
-    public string $nim;
-    public string $namaDepan;
-    public string $namaBelakang;
-    public string $email;
-    public string $jenisKelamin;
-    public string $agama;
-    public string $jenjang;
-    public string $tanggalLahir;
-    public string $noHP;
-    public string $alamat;
-    public string $status;
-    public int $totalSKS;
-    public int $semester;
+    public $id;
+    public $nim;
+    public $namaDepan;
+    public $namaBelakang;
+    public $email;
+    public $jenisKelamin;
+    public $agama;
+    public $jenjang;
+    public $tanggalLahir;
+    public $noHP;
+    public $alamat;
+    public $status;
+    public $totalSKS;
+    public $semester;
     
-    public int $idJurusan;
-    public int $idDosenPA;
+    public $idJurusan;
+    public $idDosenPA;
     
-    public JurusanEntity $jurusan;
-    public DosenEntity $dosenPA;
+    public $jurusan;
+    public $dosenPA;
 
-    public function __construct(MahasiswaEntity $mahasiswa, JurusanEntity $jurusan, DosenEntity $dosenPA) {
+    public function __construct(MahasiswaEntity $mahasiswa, $jurusan, $dosenPA) {
+        if (is_null($dosenPA)) {
+            $this->dosenPA = null;
+            $this->idosenPA = null;
+        } else {
+            $this->dosenPA = $dosenPA;
+            $this->idDosenPA = $mahasiswa->idDosenPA;
+        }
+
+        if (is_null($jurusan)) {
+            $this->jurusan = null;
+            $this->idJurusan = null;
+        } else {
+            $this->idJurusan = $mahasiswa->idJurusan;
+            $this->jurusan = $jurusan;
+        } 
+
         $this->nim = $mahasiswa->nim;
         $this->namaDepan = $mahasiswa->namaDepan;
         $this->namaBelakang = $mahasiswa->namaBelakang;
@@ -61,11 +75,5 @@ class MahasiswaEntityDetails {
         $this->status = $mahasiswa->status;
         $this->totalSKS = $mahasiswa->totalSKS;
         $this->semester = $mahasiswa->semester;
-    
-        $this->idJurusan = $mahasiswa->idJurusan;
-        $this->idDosenPA = $mahasiswa->idDosenPA;
-        
-        $this->jurusan = $jurusan;
-        $this->dosenPA = $dosenPA;
     }
 }

@@ -60,7 +60,7 @@ class JurusanRepository {
         }, $result);
     }
 
-    public function findById(int $id): ? JurusanEntity
+    public function findById($id): ? JurusanEntity
     {
         $statement = $this->connection->prepare("SELECT * FROM jurusan WHERE id_jurusan = ?");
         $statement->execute([$id]);

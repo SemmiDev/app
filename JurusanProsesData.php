@@ -34,8 +34,12 @@ if ($act == 'create') {
         $req->nama = $nama;
         $req->akreditasi = $akreditasi;
         $req->jenjang = $jenjang;
-        $req->idFakultas = $idFakultas;
 
+
+        if ($idFakultas == "") {
+            $req->idFakultas = null;
+        }
+        
         $jurusanService->create($req);
         $msg = "Jurusan berhasil ditambahkan";
         setcookie('success', $msg, time() + 5);

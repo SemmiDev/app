@@ -18,9 +18,9 @@ CREATE TABLE IF NOT EXISTS jurusan (
     nama_jurusan VARCHAR(50) NOT NULL,
     akreditasi VARCHAR(1) NOT NULL,
     jenjang VARCHAR(10) NOT NULL,
-    id_fakultas INT(11) NOT NULL,
+    id_fakultas INT(11) DEFAULT NULL,
     PRIMARY KEY (id_jurusan),
-    FOREIGN KEY (id_fakultas) REFERENCES fakultas(id_fakultas) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (id_fakultas) REFERENCES fakultas(id_fakultas) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 -- dummy data for jurusan
@@ -47,9 +47,9 @@ CREATE TABLE IF NOT EXISTS users (
     id_user INT(11) NOT NULL AUTO_INCREMENT,
     email VARCHAR(50) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
-    role INT(11) NOT NULL,
+    id_role INT(11) DEFAULT NULL,
     PRIMARY KEY (id_user),
-    FOREIGN KEY (role) REFERENCES roles(id_role) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (id_role) REFERENCES roles(id_role) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 
@@ -86,15 +86,15 @@ CREATE TABLE IF NOT EXISTS mahasiswa (
     total_sks INT(11) NOT NULL,
     semester INT(2) NOT NULL,
     alamat VARCHAR(120) NOT NULL,
-    id_jurusan INT(11) NOT NULL,
+    id_jurusan INT(11) DEFAULT NULL,
     id_dosen_pa INT(11) DEFAULT NULL,
     PRIMARY KEY (id_mahasiswa),
-    FOREIGN KEY (id_jurusan) REFERENCES jurusan(id_jurusan) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_jurusan) REFERENCES jurusan(id_jurusan) ON DELETE SET NULL ON UPDATE CASCADE,
     FOREIGN KEY (id_dosen_pa) REFERENCES dosen(id_dosen) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 INSERT INTO mahasiswa (id_mahasiswa, nim, nama_depan, nama_belakang, email, jenis_kelamin, agama, jenjang, tanggal_lahir, no_hp, status, total_sks, semester, alamat, id_jurusan, id_dosen_pa)
-VALUES (1, '123456789', 'Dian', 'Surya', 'SAM', 'Laki-Laki', 'Islam', 'S1', '1999-01-01', '08123456789', 'Mahasiswa', '0', '1', 'Jl. Jendral Sudirman No. 1', 1, 1);
+VALUES (1, '123456789', 'Dian', 'Surya', 'SAM@gmail.com', 'Laki-Laki', 'Islam', 'S1', '1999-01-01', '08123456789', 'Mahasiswa', '0', '1', 'Jl. Jendral Sudirman No. 1', 1, 1);
 
 CREATE TABLE IF NOT EXISTS ruangan (
     id_ruangan INT(11) NOT NULL AUTO_INCREMENT,
@@ -109,34 +109,35 @@ CREATE TABLE IF NOT EXISTS ruangan (
 
 CREATE TABLE IF NOT EXISTS matakuliah (
     id_matakuliah INT(11) NOT NULL AUTO_INCREMENT,
-    nama_matakuliah VARCHAR(50) NOT NULL,
+    nama VARCHAR(50) NOT NULL,
+    kode_matakuliah VARCHAR(50) UNIQUE NOT NULL,
     sks INT(11) NOT NULL,
     semester INT(2) NOT NULL,
     dosen_pengampu INT(11) NOT NULL,
-    jam_mulai timestamp NOT NULL,
-    jam_selesai timestamp NOT NULL,
     id_jurusan INT(11) NOT NULL,
     PRIMARY KEY (id_matakuliah),
     FOREIGN KEY (id_jurusan) REFERENCES jurusan(id_jurusan) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (dosen_pengampu) REFERENCES dosen(id_dosen) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS dosen_matakuliah (
-    id_dosen_matakuliah INT(11) NOT NULL AUTO_INCREMENT,
-    id_dosen INT(11) NOT NULL,
-    id_matakuliah INT(11) NOT NULL,
-    PRIMARY KEY (id_dosen_matakuliah),
-    FOREIGN KEY (id_dosen) REFERENCES dosen(id_dosen) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (id_matakuliah) REFERENCES matakuliah(id_matakuliah) ON DELETE CASCADE ON UPDATE CASCADE
-);
+-- CREATE TABLE IF NOT EXISTS dosen_matakuliah (
+--     id_dosen_matakuliah INT(11) NOT NULL AUTO_INCREMENT,
+--     id_dosen INT(11) NOT NULL,
+--     id_matakuliah INT(11) NOT NULL,
+--     jam_mulai timestamp NOT NULL,
+--     jam_selesai timestamp NOT NULL,
+--     PRIMARY KEY (id_dosen_matakuliah),
+--     FOREIGN KEY (id_dosen) REFERENCES dosen(id_dosen) ON DELETE CASCADE ON UPDATE CASCADE,
+--     FOREIGN KEY (id_matakuliah) REFERENCES matakuliah(id_matakuliah) ON DELETE CASCADE ON UPDATE CASCADE
+-- );
 
-CREATE TABLE IF NOT EXISTS mahasiswa_matakuliah (
-    id_mahasiswa_matakuliah INT(11) NOT NULL AUTO_INCREMENT,
-    id_mahasiswa INT(11) NOT NULL,
-    id_matakuliah INT(11) NOT NULL,
-    semester INT(2) NOT NULL,
-    nilai INT(11) NOT NULL,
-    PRIMARY KEY (id_mahasiswa_matakuliah),
-    FOREIGN KEY (id_mahasiswa) REFERENCES mahasiswa(id_mahasiswa) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (id_matakuliah) REFERENCES matakuliah(id_matakuliah) ON DELETE CASCADE ON UPDATE CASCADE
-);
+-- CREATE TABLE IF NOT EXISTS mahasiswa_matakuliah (
+--     id_mahasiswa_matakuliah INT(11) NOT NULL AUTO_INCREMENT,
+--     id_mahasiswa INT(11) NOT NULL,
+--     id_matakuliah INT(11) NOT NULL,
+--     semester INT(2) NOT NULL,
+--     nilai INT(11) NOT NULL,
+--     PRIMARY KEY (id_mahasiswa_matakuliah),
+--     FOREIGN KEY (id_mahasiswa) REFERENCES mahasiswa(id_mahasiswa) ON DELETE CASCADE ON UPDATE CASCADE,
+--     FOREIGN KEY (id_matakuliah) REFERENCES matakuliah(id_matakuliah) ON DELETE CASCADE ON UPDATE CASCADE
+-- );

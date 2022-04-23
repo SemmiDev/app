@@ -70,7 +70,7 @@ class DosenRepository {
         }, $result);
     }
 
-    public function findById(int $id): ? DosenEntity
+    public function findById($id): ? DosenEntity
     {
         $statement = $this->connection->prepare("SELECT * FROM dosen WHERE id_dosen = ?");
         $statement->execute([$id]);

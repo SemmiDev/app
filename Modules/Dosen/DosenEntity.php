@@ -3,15 +3,15 @@
 namespace Modules\Dosen\Entity;
 
 class DosenEntity {
-    public int $id;
-    public string $nip;
-    public string $namaDepan;
-    public string $namaBelakang;
-    public string $golonganPNS;
-    public string $status;
-    public string $email;
-    public string $jenisKelamin;
-    public string $noTelp;
-    public string $noHP;
-    public string $alamat;
+    public $id;
+    public $nip;
+    public $namaDepan;
+    public $namaBelakang;
+    public $golonganPNS;
+    public $status;
+    public $email;
+    public $jenisKelamin;
+    public $noTelp;
+    public $noHP;
+    public $alamat;
 }

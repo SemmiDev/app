@@ -56,39 +56,37 @@
                 </div>
             <?php } else { ?>
 
-            <div class="table-responsive">
-                <table class="table-auto">
-                    <thead>
-                        <tr>
-                            <th class="px-4 py-2">No</th>
-                            <th class="px-4 py-2">Nama Fakultas</th>
-                            <th class="px-4 py-2">Total Jurusan</th>
-                            <th class="px-4 py-2">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $no = 1;
-                        foreach ($dataFakultas as $fakultas) : ?>
+                <div class="table-responsive">
+                    <table class="table-auto">
+                        <thead>
                             <tr>
-                                <td class="border px-4 py-2"><?= $no++ ?></td>
-                                <td class="border px-4 py-2"><?= $fakultas->nama ?></td>
-                                <td class="border px-4 py-2"><?= $jurusanService->totalJurusanInFakultasId($fakultas->id) ?></td>
-                                <td class="border px-4 py-2">
-                                    <div class="flex">
-                                        <a href="./FakultasPageEditData.php?id=<?= $fakultas->id ?>" class="bg-green-500 hover:bg-green-700 text-slate-50 font-bold py-2 px-3 rounded mr-2">
-                                            Edit
-                                        </a>
-                                        <a href="./FakultasProsesData.php?act=delete&id=<?= $fakultas->id ?>" class="bg-red-500 hover:bg-red-700 text-slate-50 font-bold py-2 px-3 rounded">
-                                            Hapus
-                                        </a>
-                                    </div>
-                                </td>
+                                <th class="px-4 py-2">No</th>
+                                <th class="px-4 py-2">Nama Fakultas</th>
+                                <th class="px-4 py-2">Total Jurusan</th>
+                                <th class="px-4 py-2">Aksi</th>
                             </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $no = 1;
+                            foreach ($dataFakultas as $fakultas) : ?>
+                                <tr>
+                                    <td class="border px-4 py-2"><?= $no++ ?></td>
+                                    <td class="border px-4 py-2"><?= $fakultas->nama ?></td>
+                                    <td class="border px-4 py-2"><?= $jurusanService->totalJurusanInFakultasId($fakultas->id) ?></td>
+                                    <td class="border px-4 py-2">
+                                        <div class="flex">
+                                            <a href="./FakultasPageEditData.php?id=<?= $fakultas->id ?>" class="bg-green-500 hover:bg-green-700 text-slate-50 font-bold py-2 px-3 rounded mr-2">
+                                                Edit
+                                            </a>
+                                            <a href="./FakultasProsesData.php?act=delete&id=<?= $fakultas->id ?>" class="bg-red-500 hover:bg-red-700 text-slate-50 font-bold py-2 px-3 rounded" onclick="return confirm('Apakah anda yakin untuk menghapus?')">Delete</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
             <?php } ?>
         </div>
     </main>

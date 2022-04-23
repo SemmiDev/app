@@ -39,7 +39,7 @@ class FakultasRepository {
         }, $result);
     }
 
-    public function findById(int $id): ? FakultasEntity
+    public function findById($id): ? FakultasEntity
     {
         $statement = $this->connection->prepare("SELECT id_fakultas, nama_fakultas FROM fakultas WHERE id_fakultas = ?");
         $statement->execute([$id]);

@@ -8,7 +8,6 @@ use Modules\Exception\ValidationException;
 use Config\Database;
 use Modules\Fakultas\Repository\FakultasRepository;
 use Modules\Jurusan\Entity\JurusanEntityDetails;
-use Modules\Mahasiswa\Repository\MahasiswaRepository;
 
 class JurusanService
 {
@@ -103,7 +102,7 @@ class JurusanService
         return $jurusanDetails;
     }
 
-    public function findById(int $id): ? JurusanEntityDetails
+    public function findById($id): ? JurusanEntityDetails
     {
         try {
             Database::beginTransaction();

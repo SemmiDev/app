@@ -40,7 +40,10 @@ if ($act == 'create') {
     $req->totalSKS = $totalSks;
     $req->semester = $semester;
     $req->idJurusan = $jurusanId;
-    $req->idDosenPA = $dosenId;
+    
+    if ($dosenId == "") {
+        $req->idDosenPA = null;
+    }
 
     try {
         $mahasiswaService->create($req);
