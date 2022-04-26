@@ -12,6 +12,15 @@ class MataKuliahRepository {
         $this->connection = $connection;
     }
 
+    public function findDosenPengajar($idMatkul)
+    {
+        $statement = $this->connection->prepare("SELECT id_dosen FROM mengajar WHERE id_matakuliah = :idMatkul");
+        $statement->bindParam(":idMatkul", $idMatkul);
+        $statement->execute();
+        $result = $statement->fetchAll();
+        return $result;
+    }
+
     public function save(MataKuliahEntity $matkul): MataKuliahEntity
     {
         $statement = $this->connection->prepare("INSERT INTO matakuliah(nama, kode, sks, semester, id_dosen_pengampu, id_jurusan) VALUES (?,?,?,?,?,?)");

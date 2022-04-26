@@ -75,7 +75,7 @@ $mahasiswaService = new MahasiswaService(
     $jurusanRepository, 
     $dosenRepository);
 $ruanganService = new RuanganService($ruanganRepository);
-$mataKuliahService = new MataKuliahService($mataKuliahRepository);
+$mataKuliahService = new MataKuliahService($mataKuliahRepository, $dosenRepository, $jurusanRepository);
 $mengajarService = new MengajarService(
     $mengajarRepository,
     $dosenRepository,

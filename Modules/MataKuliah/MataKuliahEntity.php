@@ -40,6 +40,7 @@ class MataKuliahEntityDetails {
             $this->jurusan = $jurusan;
         }
 
+        $this->id = $mataKuliah->id;
         $this->nama = $mataKuliah->nama;
         $this->kode = $mataKuliah->kode;
         $this->sks = $mataKuliah->sks;

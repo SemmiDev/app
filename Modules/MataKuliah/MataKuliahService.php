@@ -3,36 +3,42 @@
 namespace Modules\MataKuliah\Service;
 
 use Config\Database;
-use Modules\Dosen\Entity\DosenEntity;
+use Modules\Dosen\Repository\DosenRepository;
 use Modules\Exception\ValidationException;
+use Modules\Jurusan\Repository\JurusanRepository;
 use Modules\MataKuliah\Entity\MataKuliahEntity;
+use Modules\MataKuliah\Entity\MataKuliahEntityDetails;
 use Modules\MataKuliah\Repository\MataKuliahRepository;
 
 class MataKuliahService
 {
     private MataKuliahRepository $mataKuliahRepository;
+    private DosenRepository $dosenRepository;
+    private JurusanRepository $jurusanRepository;
 
-    public function __construct(MataKuliahRepository $mataKuliahRepository)
-    {
+    public function __construct(
+        MataKuliahRepository $mataKuliahRepository,
+        DosenRepository $dosenRepository,
+        JurusanRepository $jurusanRepository
+    ) {
         $this->mataKuliahRepository = $mataKuliahRepository;
+        $this->dosenRepository = $dosenRepository;
+        $this->jurusanRepository = $jurusanRepository;
     }
 
-    public function totalMahasiswaInMataKuliahId($id) 
+    public function totalMahasiswaInMataKuliahId($id)
     {
         return 1;
     }
 
-    public function dosenPengajar($id) {
-        $a = new DosenEntity();
-        $a->namaDepan = "sam";
-        $a->namaBelakang = "dev";
-
-        $b = new DosenEntity();
-        $b->namaDepan = "sam 2";
-        $b->namaBelakang = "dev 2";
-
-
-        return [$a,$b];
+    public function dosenPengajar($matkulId)
+    {
+        $dosenPengajar = $this->mataKuliahRepository->findDosenPengajar($matkulId);
+        $listDosenPengajar = [];
+        foreach ($dosenPengajar as $dosen) {
+            array_push($listDosenPengajar, $this->dosenRepository->findById($dosen['id_dosen']));
+        }
+        return $listDosenPengajar;
     }
 
     public function create(MataKuliahEntity $req): MataKuliahEntity
@@ -78,12 +84,21 @@ class MataKuliahService
         }
     }
 
-    public function findAll(): array
+    public function findAll()
     {
-        return $this->mataKuliahRepository->findAll();
+        $mataKuliah = $this->mataKuliahRepository->findAll();
+        $listMataKuliah = [];
+        foreach ($mataKuliah as $matkul) {
+            $detail = new MataKuliahEntityDetails(
+            $matkul,
+            $this->dosenRepository->findById($matkul->idDosenPengampu),
+            $this->jurusanRepository->findById($matkul->idJurusan));
+            array_push($listMataKuliah, $detail);
+        }
+        return $listMataKuliah;
     }
 
-    public function findById($id): ? MataKuliahEntity
+    public function findById($id): ?MataKuliahEntity
     {
         try {
             Database::beginTransaction();

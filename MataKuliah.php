@@ -82,24 +82,24 @@
                                     <td class="border px-4 py-2"><?= $mataKuliah->sks ?></td>
                                     <td class="border px-4 py-2"><?= $mataKuliah->jurusan->nama ?></td>
                                     <td class="border px-4 py-2"><?= $mataKuliah->semester ?></td>
-                                    <td class="border px-4 py-2"><?= $mataKuliah->dosenPengampu->namaDepan ?></td>
+                                    <td class="border px-4 py-2"><?= $mataKuliah->dosenPengampu->namaDepan . ' ' . $mataKuliah->dosenPengampu->namaBelakang ?></td>
                                     <td class="border px-4 py-2"><?= $mataKuliahService->totalMahasiswaInMataKuliahId($mataKuliah->id) . ' orang' ?></td>
 
                                     <td class="border px-4 py-2">
-                                        <?php foreach ($mataKuliahService->dosenPengajar(1) as $dosenPengajar) : ?>
+                                        <?php foreach ($mataKuliahService->dosenPengajar($mataKuliah->id) as $dosenPengajar) : ?>
                                             <li class="ml-2">
                                                 <a href="./DosenPage.php?id=<?= $dosenPengajar->namaDepan ?>" class="text-blue-500 hover:text-blue-700">
-                                                    <?=  $dosenPengajar->namaDepan ?>
+                                                    <?= $dosenPengajar->namaDepan . ' ' . $dosenPengajar->namaBelakang ?>
                                                 </a>
                                             </li>
                                         <?php endforeach; ?>
                                     </td>
                                     <td class="border px-4 py-2">
                                         <div class="flex">
-                                            <a href="./JurusanPageEditData.php?id=<?= $jurusan->id ?>" class="bg-green-500 hover:bg-green-700 text-slate-50 font-bold py-2 px-3 rounded mr-2">
+                                            <a href="./MataKuliahPageEditData.php?id=<?= $mataKuliah->id ?>" class="bg-green-500 hover:bg-green-700 text-slate-50 font-bold py-2 px-3 rounded mr-2">
                                                 Edit
                                             </a>
-                                            <a href="./JurusanProsesData.php?act=delete&id=<?= $jurusan->id ?>" class="bg-red-500 hover:bg-red-700 text-slate-50 font-bold py-2 px-3 rounded">
+                                            <a href="./MataKuliahProsesData.php?act=delete&id=<?= $mataKuliah->id ?>" class="bg-red-500 hover:bg-red-700 text-slate-50 font-bold py-2 px-3 rounded">
                                                 Hapus
                                             </a>
                                         </div>
