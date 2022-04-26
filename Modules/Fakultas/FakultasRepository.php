@@ -14,15 +14,15 @@ class FakultasRepository {
 
     public function save(FakultasEntity $fakultas): FakultasEntity
     {
-        $statement = $this->connection->prepare("INSERT INTO fakultas(nama_fakultas) VALUES (?)");
-        $statement->execute([$fakultas->nama]);
+        $statement = $this->connection->prepare("INSERT INTO fakultas(nama_fakultas, id_dekan, id_wakil_dekan_1, id_wakil_dekan_2, id_wakil_dekan_3) VALUES (?,?,?,?,?)");
+        $statement->execute([$fakultas->nama, $fakultas->idDekan, $fakultas->idWakilDekan1, $fakultas->idWakilDekan2, $fakultas->idWakilDekan3]);
         return $fakultas;
     }
 
     public function update(FakultasEntity $fakultas): FakultasEntity
     {
-        $statement = $this->connection->prepare("UPDATE fakultas SET nama_fakultas = ? WHERE id_fakultas = ?");
-        $statement->execute([$fakultas->nama, $fakultas->id]);
+        $statement = $this->connection->prepare("UPDATE fakultas SET nama_fakultas = ?, id_dekan = ?, id_wakil_dekan_1 = ?, id_wakil_dekan_2 = ?, id_wakil_dekan_3 = ? WHERE id_fakultas = ?");
+        $statement->execute([$fakultas->nama, $fakultas->idDekan, $fakultas->idWakilDekan1, $fakultas->idWakilDekan2, $fakultas->idWakilDekan3, $fakultas->id]);
         return $fakultas;
     }
 
@@ -35,13 +35,17 @@ class FakultasRepository {
             $fakultas = new FakultasEntity();
             $fakultas->id = $row['id_fakultas'];
             $fakultas->nama = $row['nama_fakultas'];
+            $fakultas->idDekan = $row['id_dekan'];
+            $fakultas->idWakilDekan1 = $row['id_wakil_dekan_1'];
+            $fakultas->idWakilDekan2 = $row['id_wakil_dekan_2'];
+            $fakultas->idWakilDekan3 = $row['id_wakil_dekan_3'];
             return $fakultas;
         }, $result);
     }
 
     public function findById($id): ? FakultasEntity
     {
-        $statement = $this->connection->prepare("SELECT id_fakultas, nama_fakultas FROM fakultas WHERE id_fakultas = ?");
+        $statement = $this->connection->prepare("SELECT * FROM fakultas WHERE id_fakultas = ?");
         $statement->execute([$id]);
 
         try {
@@ -49,7 +53,11 @@ class FakultasRepository {
                 $fakultas = new FakultasEntity();
                 $fakultas->id = $row['id_fakultas'];
                 $fakultas->nama = $row['nama_fakultas'];
-                return $fakultas;
+                $fakultas->idDekan = $row['id_dekan'];
+                $fakultas->idWakilDekan1 = $row['id_wakil_dekan_1'];
+                $fakultas->idWakilDekan2 = $row['id_wakil_dekan_2'];
+                $fakultas->idWakilDekan3 = $row['id_wakil_dekan_3'];
+            return $fakultas;
             } else {
                 return null;
             }

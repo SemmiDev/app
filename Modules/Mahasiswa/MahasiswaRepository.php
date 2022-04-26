@@ -21,9 +21,26 @@ class MahasiswaRepository {
         return $stmt->fetchColumn();
     }
 
+    public function totalMahasiswaInProdiId(int $prodiId): int
+    {
+        $sql = "SELECT COUNT(*) FROM mahasiswa WHERE id_prodi = :prodiId";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':prodiId', $prodiId);
+        $stmt->execute();
+        return $stmt->fetchColumn();
+    }
+
+    public function updateProdi($id, $prodiId) {
+        $sql = "UPDATE mahasiswa SET id_prodi = :prodiId WHERE id_mahasiswa = :id";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':prodiId', $prodiId);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+    }
+
     public function save(MahasiswaEntity $mhs): MahasiswaEntity
     {
-        $statement = $this->connection->prepare("INSERT INTO mahasiswa(nim, nama_depan, nama_belakang, email, jenis_kelamin, agama, jenjang, tanggal_lahir, no_hp, status, total_sks, semester, alamat, id_jurusan, id_dosen_pa) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+        $statement = $this->connection->prepare("INSERT INTO mahasiswa(nim, nama_depan, nama_belakang, email, jenis_kelamin, agama, jenjang, tanggal_lahir, no_hp, status, total_sks, semester, alamat, id_jurusan, id_prodi, id_dosen_pa) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
         $statement->execute(
             [
                 $mhs->nim,
@@ -40,6 +57,7 @@ class MahasiswaRepository {
                 $mhs->semester,
                 $mhs->alamat,
                 $mhs->idJurusan,   
+                $mhs->idProdi,   
                 $mhs->idDosenPA
             ]);
         return $mhs;
@@ -47,7 +65,7 @@ class MahasiswaRepository {
 
     public function update(MahasiswaEntity $mhs): MahasiswaEntity
     {
-        $statement = $this->connection->prepare("UPDATE mahasiswa SET nim = ? , nama_depan = ?, nama_belakang = ?, email = ?, jenis_kelamin = ?, agama = ?, jenjang = ?, tanggal_lahir = ?, no_hp = ?, status = ?, total_sks = ?, semester = ?, alamat = ?, id_jurusan = ?, id_dosen_pa = ? WHERE id_mahasiswa = ?");
+        $statement = $this->connection->prepare("UPDATE mahasiswa SET nim = ? , nama_depan = ?, nama_belakang = ?, email = ?, jenis_kelamin = ?, agama = ?, jenjang = ?, tanggal_lahir = ?, no_hp = ?, status = ?, total_sks = ?, semester = ?, alamat = ?, id_jurusan = ?, id_prodi = ?, id_dosen_pa = ? WHERE id_mahasiswa = ?");
         $statement->execute([
             $mhs->nim,
             $mhs->namaDepan,
@@ -63,6 +81,7 @@ class MahasiswaRepository {
             $mhs->semester,
             $mhs->alamat,
             $mhs->idJurusan,
+            $mhs->idProdi,
             $mhs->idDosenPA,
             $mhs->id]);
         return $mhs;
@@ -90,6 +109,7 @@ class MahasiswaRepository {
             $mhs->semester = $row['semester'];
             $mhs->alamat = $row['alamat'];
             $mhs->idJurusan = $row['id_jurusan'];
+            $mhs->idProdi = $row['id_prodi'];
             $mhs->idDosenPA = $row['id_dosen_pa'];
             return $mhs;
         }, $result);
@@ -118,6 +138,7 @@ class MahasiswaRepository {
                 $mhs->semester = $row['semester'];
                 $mhs->alamat = $row['alamat'];
                 $mhs->idJurusan = $row['id_jurusan'];
+                $mhs->idProdi = $row['id_prodi'];
                 $mhs->idDosenPA = $row['id_dosen_pa'];
                 return $mhs;
             } else {

@@ -25,6 +25,7 @@ if ($act == 'delete') {
 
 if ($act == 'create') {
     $nama = $_POST['nama'];
+    $idKajur = $_POST['id_kajur'];
     $akreditasi = $_POST['akreditasi'];
     $jenjang = $_POST['jenjang'];
     $idFakultas = $_POST['idFakultas'];
@@ -32,12 +33,17 @@ if ($act == 'create') {
     try {
         $req = new JurusanEntity();
         $req->nama = $nama;
+        $req->idKajur = $idKajur;
         $req->akreditasi = $akreditasi;
         $req->jenjang = $jenjang;
-
+        $req->idFakultas = $idFakultas;
 
         if ($idFakultas == "") {
             $req->idFakultas = null;
+        }
+
+        if ($idKajur == "") {
+            $req->idKajur = null;
         }
         
         $jurusanService->create($req);
@@ -54,6 +60,7 @@ if ($act == 'create') {
 if ($act == 'update') {
     $id = $_POST['id'];
     $nama = $_POST['nama'];
+    $idKajur = $_POST['id_kajur'];
     $akreditasi = $_POST['akreditasi'];
     $jenjang = $_POST['jenjang'];
     $idFakultas = $_POST['idFakultas'];
@@ -61,6 +68,7 @@ if ($act == 'update') {
     try {
         $req = new JurusanEntity();
         $req->id = $id;
+        $req->idKajur = $idKajur;
         $req->nama = $nama;
         $req->akreditasi = $akreditasi;
         $req->jenjang = $jenjang;

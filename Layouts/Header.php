@@ -15,7 +15,7 @@
             <a href="/" class="text-2xl font-semibold text-gray-800 no-underline">
                 <img src="../Assets/Images/riau.png" alt="logo" class="h-8">
             </a>
-            <span class="ml-2 text-gray-600 text-md">Manajemen Akademik <span class="font-bold">Universitas Riau</span></span>
+            <span class="ml-2 text-gray-600 text-md">Sistem Informasi Akademik <span class="font-bold">Universitas Riau</span></span>
         </div>
     </div>
 </header>

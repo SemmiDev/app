@@ -9,19 +9,23 @@ use Modules\Jurusan\Repository\JurusanRepository;
 use Modules\Mahasiswa\Entity\MahasiswaEntity;
 use Modules\Mahasiswa\Entity\MahasiswaEntityDetails;
 use Modules\Mahasiswa\Repository\MahasiswaRepository;
+use Modules\Prodi\Repository\ProdiRepository;
 
 class MahasiswaService
 {
     private MahasiswaRepository $mahasiswaRepository;
+    private ProdiRepository $prodiRepository;
     private JurusanRepository $jurusanRepository;
     private DosenRepository $dosenRepository;
 
     public function __construct(
         MahasiswaRepository $mahasiswaRepository,
+        ProdiRepository $prodiRepository,
         JurusanRepository $jurusanRepository,
         DosenRepository $dosenRepository
     ) {
         $this->mahasiswaRepository = $mahasiswaRepository;
+        $this->prodiRepository = $prodiRepository;
         $this->jurusanRepository = $jurusanRepository;
         $this->dosenRepository = $dosenRepository;
     }
@@ -30,41 +34,37 @@ class MahasiswaService
         return $this->mahasiswaRepository->totalMahasiswaInJurusanId($id);
     }
 
-    public function create(MahasiswaEntity $req): MahasiswaEntityDetails
+    public function totalMahasiswaInProdiId(int $id) {
+        return $this->mahasiswaRepository->totalMahasiswaInProdiId($id);
+    }
+
+    public function listProdiInJurusan($prodiID) {
+        return $this->prodiRepository->prodiInJurusan($prodiID);
+    }
+
+    public function create(MahasiswaEntity $req): MahasiswaEntity
     {
         try {
             Database::beginTransaction();
 
             $this->mahasiswaRepository->save($req);
-            $mhsDetails = new MahasiswaEntityDetails(
-                $req,
-                $this->jurusanRepository->findById($req->idJurusan),
-                $this->dosenRepository->findById($req->idDosenPA)
-            );
-        
+
             Database::commitTransaction();
-            return $mhsDetails;
+            return $req;
         } catch (\Exception $exception) {
             Database::rollbackTransaction();
             throw $exception;
         }
     }
 
-    public function update(MahasiswaEntity $req): MahasiswaEntityDetails    
+    public function update(MahasiswaEntity $req): MahasiswaEntity
     {
         try {
             Database::beginTransaction();
 
             $this->mahasiswaRepository->update($req);
-            $mhs = new MahasiswaEntityDetails(
-                $req,
-                $this->jurusanRepository->findById($req->idJurusan),
-                $this->dosenRepository->findById($req->idDosenPA)
-            );
-            $mhs->id = $req->id;
-
             Database::commitTransaction();
-            return $mhs;
+            return $req;
         } catch (\Exception $exception) {
             Database::rollbackTransaction();
             throw $exception;
@@ -97,12 +97,24 @@ class MahasiswaService
             $m = new MahasiswaEntityDetails(
                 $mhs,
                 $this->jurusanRepository->findById($mhs->idJurusan),
+                $this->prodiRepository->findById($mhs->idProdi),
                 $this->dosenRepository->findById($mhs->idDosenPA)
             );
-            $m->id = $mhs->id;
             array_push($mahasiswaDetails, $m);
         }
         return $mahasiswaDetails;
+    }
+
+    public function updateProdi($id, $prodiID) {
+        try {
+            Database::beginTransaction();
+
+            $this->mahasiswaRepository->updateProdi($id, $prodiID);
+            Database::commitTransaction();
+        } catch (\Exception $exception) {
+            Database::rollbackTransaction();
+            throw $exception;
+        }
     }
 
     public function findById(int $id): ?MahasiswaEntityDetails
@@ -116,6 +128,7 @@ class MahasiswaService
 
             $mhsDetails = new MahasiswaEntityDetails(
                 $mhs,
+                $this->prodiRepository->findById($mhs->idProdi),
                 $this->jurusanRepository->findById($mhs->idJurusan),
                 $this->dosenRepository->findById($mhs->idDosenPA)
             );

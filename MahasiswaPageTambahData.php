@@ -6,6 +6,7 @@
 
         <?php 
         require_once './App.php';
+            $dataProdi =    $prodiService->findAll();
             $dataJurusan = $jurusanService->findAll();
             $dataDosen = $dosenService->findAll();
         ?>
@@ -132,14 +133,24 @@
                             <option value="<?= $j->id; ?>"><?= $j->nama; ?></option>
                         <?php endforeach; ?>
                     </select>
+
+                    <script>
+                        let value = document.getElementById('jurusan').value;
+                        document.getElementById('jurusan').onchange = function() {
+                            var selectedOption = this.options[this.selectedIndex];
+                            var value = selectedOption.value;
+                            document.cookie = "jurusan=" + value;
+                        };
+                    </script>
                 </div>
 
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="dosen">
                         Dosen PA
                     </label>
-                    <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="dosen" name="dosen">
-                        <option value="">Pilih Dosen</option>
+                    
+                    <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="dosen" name="dosen" required>
+                        <option value="">Pilih Dosen PA</option>
                         <?php foreach ($dataDosen as $d) : ?>
                             <option value="<?= $d->id; ?>"><?= $d->namaDepan . ' ' . $d->namaBelakang; ?></option>
                         <?php endforeach; ?>

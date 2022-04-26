@@ -21,27 +21,27 @@ class JurusanRepository {
         return $stmt->fetchColumn();
     }
 
-    public function totalJurusanInFakultas(int $fakultasId): int
+    public function totalJurusanInFakultas(int $jurusanId): int
     {
         $sql = "SELECT COUNT(*) FROM jurusan WHERE id_fakultas = :fakultasId";
         $stmt = $this->connection->prepare($sql);
-        $stmt->bindParam(':fakultasId', $fakultasId);
+        $stmt->bindParam(':fakultasId', $jurusanId);
         $stmt->execute();
         return $stmt->fetchColumn();
     }
 
-    public function save(JurusanEntity $fakultas): JurusanEntity
+    public function save(JurusanEntity $jurusan): JurusanEntity
     {
-        $statement = $this->connection->prepare("INSERT INTO jurusan(nama_jurusan, akreditasi, jenjang, id_fakultas) VALUES (?,?,?,?)");
-        $statement->execute([$fakultas->nama, $fakultas->akreditasi, $fakultas->jenjang, $fakultas->idFakultas]);
-        return $fakultas;
+        $statement = $this->connection->prepare("INSERT INTO jurusan(nama_jurusan, id_kajur, akreditasi, jenjang, id_fakultas) VALUES (?,?,?,?,?)");
+        $statement->execute([$jurusan->nama, $jurusan->idKajur, $jurusan->akreditasi, $jurusan->jenjang, $jurusan->idFakultas]);
+        return $jurusan;
     }
 
-    public function update(JurusanEntity $fakultas): JurusanEntity
+    public function update(JurusanEntity $jurusan): JurusanEntity
     {
-        $statement = $this->connection->prepare("UPDATE jurusan SET nama_jurusan = ?, akreditasi = ?, jenjang = ?, id_fakultas = ? WHERE id_jurusan = ?");
-        $statement->execute([$fakultas->nama, $fakultas->akreditasi, $fakultas->jenjang, $fakultas->idFakultas, $fakultas->id]);
-        return $fakultas;
+        $statement = $this->connection->prepare("UPDATE jurusan SET nama_jurusan = ?, id_kajur = ?, akreditasi = ?, jenjang = ?, id_fakultas = ? WHERE id_jurusan = ?");
+        $statement->execute([$jurusan->nama, $jurusan->idKajur, $jurusan->akreditasi, $jurusan->jenjang, $jurusan->idFakultas, $jurusan->id]);
+        return $jurusan;
     }
 
     public function findAll(): array
@@ -53,6 +53,7 @@ class JurusanRepository {
             $jurusan = new JurusanEntity();
             $jurusan->id = $row['id_jurusan'];
             $jurusan->nama = $row['nama_jurusan'];
+            $jurusan->idKajur = $row['id_kajur'];
             $jurusan->akreditasi = $row['akreditasi'];
             $jurusan->jenjang = $row['jenjang'];
             $jurusan->idFakultas = $row['id_fakultas'];
@@ -70,6 +71,7 @@ class JurusanRepository {
                 $jurusan = new JurusanEntity();
                 $jurusan->id = $row['id_jurusan'];
                 $jurusan->nama = $row['nama_jurusan'];
+                $jurusan->idKajur = $row['id_kajur'];
                 $jurusan->akreditasi = $row['akreditasi'];
                 $jurusan->jenjang = $row['jenjang'];
                 $jurusan->idFakultas = $row['id_fakultas'];

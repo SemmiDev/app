@@ -11,6 +11,7 @@ module.exports = {
     './JurusanPageTambahData.php',
     './JurusanPageEditData.php',
     './MahasiswaPageTambahData.php',
+    './MahasiswaPageEditProdiData.php',
     './MahasiswaPageEditData.php',
     './RuanganPageTambahData.php',
   ],

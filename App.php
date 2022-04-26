@@ -27,12 +27,30 @@ require_once __DIR__ . '/Modules/Ruangan/RuanganEntity.php';
 require_once __DIR__ . '/Modules/Ruangan/RuanganRepository.php';
 require_once __DIR__ . '/Modules/Ruangan/RuanganService.php';
 
+require_once __DIR__ . '/Modules/MataKuliah/MataKuliahEntity.php';
+require_once __DIR__ . '/Modules/MataKuliah/MataKuliahRepository.php';
+require_once __DIR__ . '/Modules/MataKuliah/MataKuliahService.php';
+
+require_once __DIR__ . '/Modules/Mengajar/MengajarEntity.php';
+require_once __DIR__ . '/Modules/Mengajar/MengajarRepository.php';
+require_once __DIR__ . '/Modules/Mengajar/MengajarService.php';
+
+require_once __DIR__ . '/Modules/Prodi/ProdiEntity.php';
+require_once __DIR__ . '/Modules/Prodi/ProdiRepository.php';
+require_once __DIR__ . '/Modules/Prodi/ProdiService.php';
+
 use Modules\Fakultas\Repository\FakultasRepository;
 use Modules\Fakultas\Service\FakultasService;
 use Modules\Jurusan\Repository\JurusanRepository;
 use Modules\Jurusan\Service\JurusanService;
 use Modules\Mahasiswa\Repository\MahasiswaRepository;
 use Modules\Mahasiswa\Service\MahasiswaService;
+use Modules\MataKuliah\Repository\MataKuliahRepository;
+use Modules\MataKuliah\Service\MataKuliahService;
+use Modules\Mengajar\Repository\MengajarRepository;
+use Modules\Mengajar\Service\MengajarService;
+use Modules\Prodi\Repository\ProdiRepository;
+use Modules\Prodi\Service\ProdiService;
 use Modules\Ruangan\Repository\RuanganRepository;
 use Modules\Ruangan\Service\RuanganService;
 
@@ -41,9 +59,31 @@ $jurusanRepository = new JurusanRepository(Database::getConnection());
 $dosenRepository = new DosenRepository(Database::getConnection());
 $mahasiswaRepository = new MahasiswaRepository(Database::getConnection());
 $ruanganRepository = new RuanganRepository(Database::getConnection());
+$mataKuliahRepository = new MataKuliahRepository(Database::getConnection());
+$mengajarRepository = new MengajarRepository(Database::getConnection());
+$prodiRepository = new ProdiRepository(Database::getConnection());
 
-$fakultasService = new FakultasService($fakultasRepository, $jurusanRepository);
-$jurusanService = new JurusanService($jurusanRepository, $fakultasRepository);
+$fakultasService = new FakultasService($fakultasRepository, $dosenRepository, $jurusanRepository);
+$jurusanService = new JurusanService(
+    $jurusanRepository, 
+    $fakultasRepository,
+    $dosenRepository);
 $dosenService = new DosenService($dosenRepository);
-$mahasiswaService = new MahasiswaService($mahasiswaRepository, $jurusanRepository, $dosenRepository);
+$mahasiswaService = new MahasiswaService(
+    $mahasiswaRepository, 
+    $prodiRepository,
+    $jurusanRepository, 
+    $dosenRepository);
 $ruanganService = new RuanganService($ruanganRepository);
+$mataKuliahService = new MataKuliahService($mataKuliahRepository);
+$mengajarService = new MengajarService(
+    $mengajarRepository,
+    $dosenRepository,
+    $mataKuliahRepository
+);
+$prodiService = new ProdiService(
+    $prodiRepository,
+    $mahasiswaRepository,
+    $dosenRepository,
+    $jurusanRepository,
+);

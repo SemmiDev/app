@@ -2,11 +2,11 @@
 <div class="w-full flex flex-col sm:flex-row flex-grow overflow-hidden">
     <?php include('./Layouts/Navigation.php'); ?>
     <main role="main" class="w-full h-full flex-grow p-3 overflow-auto mt-4">
-        <h1 class="text-3xl md:text-5xl font-extrabold mb-5" id="home">Data Jurusan</h1>
+        <h1 class="text-3xl md:text-5xl font-extrabold mb-5" id="home">Data Mata Kuliah</h1>
 
         <?php
         require_once 'App.php';
-        $dataJurusan = $jurusanService->findAll();
+        $dataMataKuliah = $mataKuliahService->findAll();
         ?>
 
         <div class="container">
@@ -45,12 +45,12 @@
             </script>
 
             <div class="flex mb-5">
-                <a href="./JurusanPageTambahData.php" class="bg-blue-500 hover:bg-blue-700 text-slate-50 font-bold py-2 px-3 rounded">
+                <a href="./MataKuliahPageTambahData.php" class="bg-blue-500 hover:bg-blue-700 text-slate-50 font-bold py-2 px-3 rounded">
                     Tambah Data
                 </a>
             </div>
 
-            <?php if (count($dataJurusan) == 0) { ?>
+            <?php if (count($dataMataKuliah) == 0) { ?>
                 <div class="bg-green-200 text-slate-900 px-4 py-3 rounded relative mb-5 w-2/3" id="div-error" role="alert">
                     <span class="block sm:inline">Ups! Data Kosong</span>
                 </div>
@@ -61,52 +61,39 @@
                         <thead>
                             <tr>
                                 <th class="px-4 py-2">No</th>
-                                <th class="px-4 py-2">Nama Jurusan</th>
-                                <th class="px-4 py-2">Kajur</th>
-                                <th class="px-4 py-2">Akreditasi</th>
-                                <th class="px-4 py-2">Jenjang</th>
-                                <th class="px-4 py-2">Fakultas</th>
+                                <th class="px-4 py-2">Nama Mata Kuliah</th>
+                                <th class="px-4 py-2">Kode</th>
+                                <th class="px-4 py-2">SKS</th>
+                                <th class="px-4 py-2">Jurusan</th>
+                                <th class="px-4 py-2">Semester</th>
+                                <th class="px-4 py-2">Dosen Pengampu</th>
                                 <th class="px-4 py-2">Total Mahasiswa</th>
+                                <th class="px-4 py-2">Dosen Pengajar</th>
                                 <th class="px-4 py-2">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php $i = 1; ?>
-                            <?php foreach ($dataJurusan as $jurusan) : ?>
+                            <?php foreach ($dataMataKuliah as $mataKuliah) : ?>
                                 <tr>
                                     <td class="border px-4 py-2"><?= $i ?></td>
-                                    <td class="border px-4 py-2"><?= $jurusan->nama ?></td>
-                                    
-                                    <?php if (!is_null($jurusan->kajur)) { ?> 
-                                        <td class="border px-4 py-2"><?= $jurusan->kajur->namaDepan . ' ' . $jurusan->kajur->namaBelakang ?></td>
-                                    <?php } else { ?>
-                                        <td class="border px-4 py-2">
-                                            <div class="flex justify-center">
-                                                <svg class="h-6 w-6 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-                                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
-                                                </svg>
-                                            </div>
-                                        </td>
-                                    <?php } ?>
-                                    
-                                    
+                                    <td class="border px-4 py-2"><?= $mataKuliah->nama ?></td>
+                                    <td class="border px-4 py-2"><?= $mataKuliah->kode ?></td>
+                                    <td class="border px-4 py-2"><?= $mataKuliah->sks ?></td>
+                                    <td class="border px-4 py-2"><?= $mataKuliah->jurusan->nama ?></td>
+                                    <td class="border px-4 py-2"><?= $mataKuliah->semester ?></td>
+                                    <td class="border px-4 py-2"><?= $mataKuliah->dosenPengampu->namaDepan ?></td>
+                                    <td class="border px-4 py-2"><?= $mataKuliahService->totalMahasiswaInMataKuliahId($mataKuliah->id) . ' orang' ?></td>
 
-                                    <td class="border px-4 py-2"><?= $jurusan->akreditasi ?></td>
-                                    <td class="border px-4 py-2"><?= $jurusan->jenjang ?></td>
-
-                                    <?php if (!is_null($jurusan->fakultas)) { ?> 
-                                        <td class="border px-4 py-2"><?= $jurusan->fakultas->nama ?></td>
-                                    <?php } else { ?>
-                                        <td class="border px-4 py-2">
-                                            <div class="flex justify-center">
-                                                <svg class="h-6 w-6 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-                                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
-                                                </svg>
-                                            </div>
-                                        </td>
-                                    <?php } ?>
-                                    
-                                    <td class="border px-4 py-2"><?= $jurusanService->totalMahasiswaInJurusanId($jurusan->id)  . ' orang' ?></td>
+                                    <td class="border px-4 py-2">
+                                        <?php foreach ($mataKuliahService->dosenPengajar(1) as $dosenPengajar) : ?>
+                                            <li class="ml-2">
+                                                <a href="./DosenPage.php?id=<?= $dosenPengajar->namaDepan ?>" class="text-blue-500 hover:text-blue-700">
+                                                    <?=  $dosenPengajar->namaDepan ?>
+                                                </a>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    </td>
                                     <td class="border px-4 py-2">
                                         <div class="flex">
                                             <a href="./JurusanPageEditData.php?id=<?= $jurusan->id ?>" class="bg-green-500 hover:bg-green-700 text-slate-50 font-bold py-2 px-3 rounded mr-2">

@@ -18,6 +18,12 @@
                     <img src="//cdn.jsdelivr.net/npm/heroicons@1.0.6/outline/academic-cap.svg" class="w-7 sm:mx-2 mx-4 inline"/>
                     <span class="hidden sm:inline">Jurusan</span>
                 </a>
+            </li>  
+            <li class="py-2 hover:bg-indigo-300 rounded">
+                <a class="truncate" href="Prodi.php">
+                    <img src="//cdn.jsdelivr.net/npm/heroicons@1.0.6/outline/badge-check.svg" class="w-7 sm:mx-2 mx-4 inline"/>
+                    <span class="hidden sm:inline">Prodi</span>
+                </a>
             </li>
             <li class="py-2 hover:bg-indigo-300 rounded">
                 <a class="truncate" href="Dosen.php">
@@ -35,6 +41,18 @@
                 <a class="truncate" href="Ruangan.php">
                     <img src="//cdn.jsdelivr.net/npm/heroicons@1.0.6/outline/library.svg" class="w-7 sm:mx-2 mx-4 inline"/>
                     <span class="hidden sm:inline">Ruangan</span>
+                </a>
+            </li>
+            <li class="py-2 hover:bg-indigo-300 rounded">
+                <a class="truncate" href="MataKuliah.php">
+                    <img src="//cdn.jsdelivr.net/npm/heroicons@1.0.6/outline/clipboard-list.svg" class="w-7 sm:mx-2 mx-4 inline"/>
+                    <span class="hidden sm:inline">Mata Kuliah</span>
+                </a>
+            </li>
+            <li class="py-2 hover:bg-indigo-300 rounded">
+                <a class="truncate" href="Mengajar.php">
+                    <img src="//cdn.jsdelivr.net/npm/heroicons@1.0.6/outline/template.svg" class="w-7 sm:mx-2 mx-4 inline"/>
+                    <span class="hidden sm:inline">Mengajar</span>
                 </a>
             </li>
         </ul>

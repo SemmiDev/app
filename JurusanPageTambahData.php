@@ -4,6 +4,13 @@
     <main role="main" class="w-full h-full flex-grow p-3 overflow-auto mt-4">
         <h1 class="text-3xl md:text-5xl mb-4 font-extrabold" id="home">Tambah Data Jurusan</h1>
         <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+
+                <?php
+                    require_once './App.php';
+                    $dataFakultas = $fakultasService->findAll();
+                    $dataDosen = $dosenService->findAll();
+                ?>
+
             <form action="JurusanProsesData.php?act=create" method="POST">
                 <div class="mb-4">
                     <input type="hidden" name="id" value="<?= $id; ?>">
@@ -12,6 +19,19 @@
                     </label>
                     <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="nama" name="nama" type="text" placeholder="Masukkan Nama Fakultas" required>
                 </div>
+
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="kajur">
+                        Kepala Jurusan
+                    </label>
+                    <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="kajur" name="id_kajur" required>
+                        <option value="">Pilih Kepala Jurusan</option>
+                        <?php foreach ($dataDosen as $dosen) : ?>
+                            <option value="<?= $dosen->id ?>" <?= $dosen->id == $dataJurusan->idKajur ? 'selected' : '' ?>><?= $dosen->namaDepan . ' ' . $dosen->namaBelakang ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="akreditasi">
                         Akreditasi
@@ -36,11 +56,6 @@
                         <option value="D4">D4</option>
                     </select>
                 </div>
-
-                <?php
-                require_once './App.php';
-                $dataFakultas = $fakultasService->findAll();
-                ?>
 
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="fakultas">

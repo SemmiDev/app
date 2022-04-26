@@ -2,11 +2,11 @@
 <div class="w-full flex flex-col sm:flex-row flex-grow overflow-hidden">
     <?php include('./Layouts/Navigation.php'); ?>
     <main role="main" class="w-full h-full flex-grow p-3 overflow-auto mt-4">
-        <h1 class="text-3xl md:text-5xl font-extrabold mb-5" id="home">Data Fakultas</h1>
+        <h1 class="text-3xl md:text-5xl font-extrabold mb-5" id="home">Data Prodi</h1>
 
         <?php
-        require_once 'App.php';
-        $dataFakultas = $fakultasService->findAll();
+            require_once 'App.php';
+            $dataProdi = $prodiService->findAll();
         ?>
 
         <div class="container">
@@ -38,19 +38,18 @@
                 </div>
             <?php endif; ?>
 
-
             <script>
                 document.cookie = 'error=empty';
                 document.cookie = 'success=empty';
             </script>
 
             <div class="flex mb-5">
-                <a href="./FakultasPageTambahData.php" class="bg-blue-500 hover:bg-blue-700 text-slate-50 font-bold py-2 px-3 rounded">
+                <a href="./ProdiPageTambahData.php" class="bg-blue-500 hover:bg-blue-700 text-slate-50 font-bold py-2 px-3 rounded">
                     Tambah Data
                 </a>
             </div>
 
-            <?php if (count($dataFakultas) == 0) { ?>
+            <?php if (count($dataProdi) == 0) { ?>
                 <div class="bg-green-200 text-slate-900 px-4 py-3 rounded relative mb-5 w-2/3" id="div-error" role="alert">
                     <span class="block sm:inline">Ups! Data Kosong</span>
                 </div>
@@ -61,25 +60,37 @@
                         <thead>
                             <tr>
                                 <th class="px-4 py-2">No</th>
-                                <th class="px-4 py-2">Nama Fakultas</th>
-                                <th class="px-4 py-2">Nama Dekan</th>
-                                <th class="px-4 py-2">Nama Wakil Dekan 1 (Bidang Akademik) </th>
-                                <th class="px-4 py-2">Nama Wakil Dekan 2 (Bidang Administrasi UMum) </th>
-                                <th class="px-4 py-2">Nama Wakil Dekan 3 (Bidang Kemahasiswaan) </th>
-                                <th class="px-4 py-2">Total Jurusan</th>
+                                <th class="px-4 py-2">Nama Prodi</th>
+                                <th class="px-4 py-2">Kaprodi</th>
+                                <th class="px-4 py-2">Akreditasi</th>
+                                <th class="px-4 py-2">Jurusan</th>
+                                <th class="px-4 py-2">Total Mahasiswa</th>
                                 <th class="px-4 py-2">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php
-                            $no = 1;
-                            foreach ($dataFakultas as $fakultas) : ?>
+                            <?php $i = 1; ?>
+                            <?php foreach ($dataProdi as $prodi) : ?>
                                 <tr>
-                                    <td class="border px-4 py-2"><?= $no++ ?></td>
-                                    <td class="border px-4 py-2"><?= $fakultas->nama ?></td>
+                                    <td class="border px-4 py-2"><?= $i ?></td>
+                                    <td class="border px-4 py-2"><?= $prodi->nama ?></td>
+
+                                    <?php if (!is_null($prodi->kaprodi)) { ?> 
+                                        <td class="border px-4 py-2"><?= $prodi->kaprodi->namaDepan . ' ' . $prodi->kaprodi->namaBelakang ?></td>
+                                    <?php } else { ?>
+                                        <td class="border px-4 py-2">
+                                            <div class="flex justify-center">
+                                                <svg class="h-6 w-6 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                                </svg>
+                                            </div>
+                                        </td>
+                                    <?php } ?>
                                     
-                                    <?php if (!is_null($fakultas->dekan)) { ?> 
-                                        <td class="border px-4 py-2"><?= $fakultas->dekan->namaDepan . ' '. $fakultas->dekan->namaBelakang ?></td>
+                                    <td class="border px-4 py-2"><?= $prodi->akreditasi ?></td>
+                                    
+                                    <?php if (!is_null($prodi->jurusan)) { ?> 
+                                        <td class="border px-4 py-2"><?= $prodi->jurusan->nama ?></td>
                                     <?php } else { ?>
                                         <td class="border px-4 py-2">
                                             <div class="flex justify-center">
@@ -89,53 +100,19 @@
                                             </div>
                                         </td>
                                     <?php } ?>
-
-                                    <?php if (!is_null($fakultas->wakilDekan1)) { ?> 
-                                        <td class="border px-4 py-2"><?= $fakultas->wakilDekan1->namaDepan . ' '. $fakultas->wakilDekan1->namaBelakang ?></td>
-                                    <?php } else { ?>
-                                        <td class="border px-4 py-2">
-                                            <div class="flex justify-center">
-                                                <svg class="h-6 w-6 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-                                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
-                                                </svg>
-                                            </div>
-                                        </td>
-                                    <?php } ?>
-
-                                    <?php if (!is_null($fakultas->wakilDekan2)) { ?> 
-                                        <td class="border px-4 py-2"><?= $fakultas->wakilDekan2->namaDepan . ' '. $fakultas->wakilDekan2->namaBelakang ?></td>
-                                    <?php } else { ?>
-                                        <td class="border px-4 py-2">
-                                            <div class="flex justify-center">
-                                                <svg class="h-6 w-6 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-                                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
-                                                </svg>
-                                            </div>
-                                        </td>
-                                    <?php } ?>
-
-                                    <?php if (!is_null($fakultas->wakilDekan3)) { ?> 
-                                        <td class="border px-4 py-2"><?= $fakultas->wakilDekan3->namaDepan . ' '. $fakultas->wakilDekan3->namaBelakang ?></td>
-                                    <?php } else { ?>
-                                        <td class="border px-4 py-2">
-                                            <div class="flex justify-center">
-                                                <svg class="h-6 w-6 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-                                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
-                                                </svg>
-                                            </div>
-                                        </td>
-                                    <?php } ?>
-
-                                    <td class="border px-4 py-2"><?= $jurusanService->totalJurusanInFakultasId($fakultas->id) ?></td>
+                                    
                                     <td class="border px-4 py-2">
                                         <div class="flex">
-                                            <a href="./FakultasPageEditData.php?id=<?= $fakultas->id ?>" class="bg-green-500 hover:bg-green-700 text-slate-50 font-bold py-2 px-3 rounded mr-2">
+                                            <a href="./ProdiPageEditData.php?id=<?= $prodi->id ?>" class="bg-green-500 hover:bg-green-700 text-slate-50 font-bold py-2 px-3 rounded mr-2">
                                                 Edit
                                             </a>
-                                            <a href="./FakultasProsesData.php?act=delete&id=<?= $fakultas->id ?>" class="bg-red-500 hover:bg-red-700 text-slate-50 font-bold py-2 px-3 rounded" onclick="return confirm('Apakah anda yakin untuk menghapus?')">Delete</a>
+                                            <a href="./ProdiProsesData.php?act=delete&id=<?= $prodi->id ?>" class="bg-red-500 hover:bg-red-700 text-slate-50 font-bold py-2 px-3 rounded">
+                                                Hapus
+                                            </a>
                                         </div>
                                     </td>
                                 </tr>
+                                <?php $i++; ?>
                             <?php endforeach; ?>
                         </tbody>
                     </table>

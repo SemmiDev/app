@@ -6,20 +6,24 @@ use Modules\Jurusan\Entity\JurusanEntity;
 use Modules\Jurusan\Repository\JurusanRepository;
 use Modules\Exception\ValidationException;
 use Config\Database;
+use Modules\Dosen\Repository\DosenRepository;
 use Modules\Fakultas\Repository\FakultasRepository;
 use Modules\Jurusan\Entity\JurusanEntityDetails;
 
 class JurusanService
 {
-    private JurusanRepository $jurusanRepository;
+    private JurusanRepository  $jurusanRepository;
     private FakultasRepository $fakultasRepository;
+    private DosenRepository    $dosenRepository;
 
     public function __construct(
         JurusanRepository $jurusanRepository, 
-        FakultasRepository $fakultasRepository)
+        FakultasRepository $fakultasRepository,
+        DosenRepository $dosenRepository)
     {
         $this->jurusanRepository = $jurusanRepository;
         $this->fakultasRepository = $fakultasRepository;
+        $this->dosenRepository = $dosenRepository;
     }
 
     public function totalMahasiswaInJurusanId(int $id) {
@@ -38,6 +42,7 @@ class JurusanService
 
             $jurusan = new JurusanEntity();
             $jurusan->nama = $req->nama;
+            $jurusan->idKajur = $req->idKajur;
             $jurusan->akreditasi = $req->akreditasi;
             $jurusan->jenjang = $req->jenjang;
             $jurusan->idFakultas = $req->idFakultas;
@@ -60,6 +65,7 @@ class JurusanService
             $jurusan = new JurusanEntity();
             $jurusan->id = $req->id;
             $jurusan->nama = $req->nama;
+            $jurusan->idKajur = $req->idKajur;
             $jurusan->akreditasi = $req->akreditasi;
             $jurusan->jenjang = $req->jenjang;
             $jurusan->idFakultas = $req->idFakultas;
@@ -97,7 +103,10 @@ class JurusanService
         $jurusan = $this->jurusanRepository->findAll();
         $jurusanDetails = [];
         foreach ($jurusan as $jurusan) {
-            $jurusanDetails[] = new JurusanEntityDetails($jurusan, $this->fakultasRepository->findById($jurusan->idFakultas));
+            $jurusanDetails[] = new JurusanEntityDetails(
+                $jurusan, 
+                $this->dosenRepository->findById($jurusan->idKajur),
+                $this->fakultasRepository->findById($jurusan->idFakultas));
         }
         return $jurusanDetails;
     }
@@ -111,7 +120,10 @@ class JurusanService
                 throw new ValidationException("id Jurusan tidak ada");
             }
 
-            $jurusanDetails = new JurusanEntityDetails($jurusan, $this->fakultasRepository->findById($jurusan->idFakultas));
+            $jurusanDetails = new JurusanEntityDetails(
+                $jurusan, 
+                $this->dosenRepository->findById($jurusan->idKajur),
+                $this->fakultasRepository->findById($jurusan->idFakultas));
             
             Database::commitTransaction();
             return $jurusanDetails;

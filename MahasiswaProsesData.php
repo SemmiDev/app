@@ -40,6 +40,7 @@ if ($act == 'create') {
     $req->totalSKS = $totalSks;
     $req->semester = $semester;
     $req->idJurusan = $jurusanId;
+    $req->idProdi = null;
     
     if ($dosenId == "") {
         $req->idDosenPA = null;
@@ -72,6 +73,16 @@ if ($act == 'delete') {
     }
 }
 
+if ($act == 'update-prodi') {
+    $id = $_POST['id'];
+    $prodi = $_POST['prodi'];
+
+    $mahasiswaService->updateProdi($id, $prodi);
+    $msg = "Prodi berhasil diubah";
+    setcookie('success', $msg, time() + 5);
+    header('Location: Mahasiswa.php');
+}
+
 if ($act == 'update') {
     $id = $_POST['id'];
     $nim = $_POST['nim'];
@@ -89,6 +100,7 @@ if ($act == 'update') {
     $semester = $_POST['semester'];
     $jurusanId = $_POST['jurusan'];
     $dosenId = $_POST['dosen'];
+    $req->idProdi = null;
 
     try {
         $req = new MahasiswaEntity();
@@ -119,3 +131,4 @@ if ($act == 'update') {
         header('Location: Mahasiswa.php');
     }
 }
+

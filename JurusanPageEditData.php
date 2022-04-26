@@ -9,6 +9,7 @@
         $id = $_GET['id'];
         $dataJurusan = $jurusanService->findById($id);
         $dataFakultas = $fakultasService->findAll();
+        $dataDosen = $dosenService->findAll();
         ?>
 
         <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -20,6 +21,18 @@
                     </label>
                     <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="nama" name="nama" type="text" placeholder="Masukkan Nama Fakultas" value="<?= $dataJurusan->nama ?>" required>
                 </div>
+
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="kajur">
+                        Kepala Jurusan
+                    </label>
+                    <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="kajur" name="kajur" required>
+                        <?php foreach ($dataDosen as $dosen) : ?>
+                            <option value="<?= $dosen->id ?>" <?= $dosen->id == $dataJurusan->idKajur ? 'selected' : '' ?>><?= $dosen->namaDepan . ' ' . $dosen->namaBelakang ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="akreditasi">
                         Akreditasi
