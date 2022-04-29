@@ -60,7 +60,7 @@ if ($act == 'create') {
 if ($act == 'update') {
     $id = $_POST['id'];
     $nama = $_POST['nama'];
-    $idKajur = $_POST['id_kajur'];
+    $idKajur = $_POST['kajur'];
     $akreditasi = $_POST['akreditasi'];
     $jenjang = $_POST['jenjang'];
     $idFakultas = $_POST['idFakultas'];

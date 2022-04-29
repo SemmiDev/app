@@ -173,13 +173,13 @@ CREATE TABLE IF NOT EXISTS mengajar (
     FOREIGN KEY (id_matakuliah) REFERENCES matakuliah(id_matakuliah) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
--- CREATE TABLE IF NOT EXISTS mahasiswa_matakuliah (
---     id_mahasiswa_matakuliah INT(11) NOT NULL AUTO_INCREMENT,
---     id_mahasiswa INT(11) NOT NULL,
---     id_matakuliah INT(11) NOT NULL,
---     semester INT(2) NOT NULL,
---     nilai INT(11) NOT NULL,
---     PRIMARY KEY (id_mahasiswa_matakuliah),
---     FOREIGN KEY (id_mahasiswa) REFERENCES mahasiswa(id_mahasiswa) ON DELETE CASCADE ON UPDATE CASCADE,
---     FOREIGN KEY (id_matakuliah) REFERENCES matakuliah(id_matakuliah) ON DELETE CASCADE ON UPDATE CASCADE
--- );
+CREATE TABLE IF NOT EXISTS enroll_matakuliah (
+    id_enroll_matakuliah INT(11) NOT NULL AUTO_INCREMENT,
+    id_mahasiswa INT(11) DEFAULT NULL,
+    id_matakuliah INT(11) DEFAULT NULL,
+    semester INT(2) NOT NULL,
+    nilai VARCHAR(1) DEFAULT NULL,
+    PRIMARY KEY (id_enroll_matakuliah),
+    FOREIGN KEY (id_mahasiswa) REFERENCES mahasiswa(id_mahasiswa) ON DELETE SET NULL ON UPDATE CASCADE,
+    FOREIGN KEY (id_matakuliah) REFERENCES matakuliah(id_matakuliah) ON DELETE SET NULL ON UPDATE CASCADE
+);

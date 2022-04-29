@@ -14,18 +14,22 @@ class JurusanEntity {
 class JurusanEntityDetails {
     public $id;
     public $nama;
-    public $id_kajur;
+    public $jenjang;
+    public $akreditasi;
+    
     public $idKajur;
     public $kajur;
-    public $akreditasi;
-    public $jenjang;
+    
+    public $idFakultas;
     public $fakultas;
 
     public function __construct(JurusanEntity $jurusan, $dosen, $fakultas) {
         if (is_null($fakultas)) {
             $this->fakultas = null;
+            $this->idFakultas = null;
         } else {
             $this->fakultas = $fakultas;
+            $this->idFakultas = $fakultas->id;
         }
 
         if (is_null($dosen)) {

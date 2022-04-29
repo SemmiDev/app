@@ -3,6 +3,8 @@
 use Config\Database;
 use Modules\Dosen\Repository\DosenRepository;
 use Modules\Dosen\Service\DosenService;
+use Modules\EnrollMataKuliah\Repository\EnrollMataKuliahRepository;
+use Modules\EnrollMataKuliah\Service\EnrollMataKuliahService;
 
 require_once __DIR__ . '/Config/Database.php';
 
@@ -39,6 +41,10 @@ require_once __DIR__ . '/Modules/Prodi/ProdiEntity.php';
 require_once __DIR__ . '/Modules/Prodi/ProdiRepository.php';
 require_once __DIR__ . '/Modules/Prodi/ProdiService.php';
 
+require_once __DIR__ . '/Modules/EnrollMataKuliah/EnrollMataKuliahEntity.php';
+require_once __DIR__ . '/Modules/EnrollMataKuliah/EnrollMataKuliahRepository.php';
+require_once __DIR__ . '/Modules/EnrollMataKuliah/EnrollMataKuliahService.php';
+
 use Modules\Fakultas\Repository\FakultasRepository;
 use Modules\Fakultas\Service\FakultasService;
 use Modules\Jurusan\Repository\JurusanRepository;
@@ -62,6 +68,7 @@ $ruanganRepository = new RuanganRepository(Database::getConnection());
 $mataKuliahRepository = new MataKuliahRepository(Database::getConnection());
 $mengajarRepository = new MengajarRepository(Database::getConnection());
 $prodiRepository = new ProdiRepository(Database::getConnection());
+$enrollMataKuliahRepository = new EnrollMataKuliahRepository(Database::getConnection());
 
 $fakultasService = new FakultasService($fakultasRepository, $dosenRepository, $jurusanRepository);
 $jurusanService = new JurusanService(
@@ -81,9 +88,16 @@ $mengajarService = new MengajarService(
     $dosenRepository,
     $mataKuliahRepository
 );
+
 $prodiService = new ProdiService(
     $prodiRepository,
     $mahasiswaRepository,
     $dosenRepository,
     $jurusanRepository,
+);
+
+$enrollMataKuliahService = new EnrollMataKuliahService(
+    $enrollMataKuliahRepository,
+    $mahasiswaRepository,
+    $mataKuliahRepository
 );

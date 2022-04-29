@@ -89,8 +89,6 @@
                                         </td>
                                     <?php } ?>
                                     
-                                    
-
                                     <td class="border px-4 py-2"><?= $jurusan->akreditasi ?></td>
                                     <td class="border px-4 py-2"><?= $jurusan->jenjang ?></td>
 

@@ -11,8 +11,7 @@ class DosenService
 {
     private DosenRepository $dosenRepository;
 
-    public function __construct(
-        DosenRepository $dosenRepository)
+    public function __construct(DosenRepository $dosenRepository)
     {
         $this->dosenRepository = $dosenRepository;
     }

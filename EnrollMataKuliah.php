@@ -1,12 +1,16 @@
-<?php include('./Layouts/Header.php'); ?>
+<?php
+
+use Modules\EnrollMataKuliah\Entity\EnrollMataKuliahEntity;
+
+ include('./Layouts/Header.php'); ?>
 <div class="w-full flex flex-col sm:flex-row flex-grow overflow-hidden">
     <?php include('./Layouts/Navigation.php'); ?>
     <main role="main" class="w-full h-full flex-grow p-3 overflow-auto mt-4">
-        <h1 class="text-3xl md:text-5xl font-extrabold mb-5" id="home">Data Prodi</h1>
+        <h1 class="text-3xl md:text-5xl font-extrabold mb-5" id="home">Data Enroll Mata Kuliah</h1>
 
         <?php
-            require_once 'App.php';
-            $dataProdi = $prodiService->findAll();
+        require_once './App.php';
+        $dataEnrollMataKuliah = $enrollMataKuliahService->findAll();
         ?>
 
         <div class="container">
@@ -38,18 +42,19 @@
                 </div>
             <?php endif; ?>
 
+
             <script>
                 document.cookie = 'error=empty';
                 document.cookie = 'success=empty';
             </script>
 
             <div class="flex mb-5">
-                <a href="./ProdiPageTambahData.php" class="bg-blue-500 hover:bg-blue-700 text-slate-50 font-bold py-2 px-3 rounded">
+                <a href="./EnrollMataKuliahPageTambahData.php" class="bg-blue-500 hover:bg-blue-700 text-slate-50 font-bold py-2 px-3 rounded">
                     Tambah Data
                 </a>
             </div>
 
-            <?php if (count($dataProdi) == 0) { ?>
+            <?php if (count($dataEnrollMataKuliah) == 0) { ?>
                 <div class="bg-green-200 text-slate-900 px-4 py-3 rounded relative mb-5 w-2/3" id="div-error" role="alert">
                     <span class="block sm:inline">Ups! Data Kosong</span>
                 </div>
@@ -60,23 +65,28 @@
                         <thead>
                             <tr>
                                 <th class="px-4 py-2">No</th>
-                                <th class="px-4 py-2">Nama Prodi</th>
-                                <th class="px-4 py-2">Kaprodi</th>
-                                <th class="px-4 py-2">Akreditasi</th>
-                                <th class="px-4 py-2">Jurusan</th>
-                                <th class="px-4 py-2">Total Mahasiswa</th>
+                                <th class="px-4 py-2">NIM Mahasiswa</th>
+                                <th class="px-4 py-2">Nama Mahasiswa</th>
+                                <th class="px-4 py-2">Kode Mata Kuliah</th>
+                                <th class="px-4 py-2">Nama Mata Kuliah</th>
+                                <th class="px-4 py-2">Semester</th>
+                                <th class="px-4 py-2">Nilai</th>
                                 <th class="px-4 py-2">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php $i = 1; ?>
-                            <?php foreach ($dataProdi as $prodi) : ?>
+                            <?php foreach ($dataEnrollMataKuliah as $enroll) : ?>
                                 <tr>
                                     <td class="border px-4 py-2"><?= $i ?></td>
-                                    <td class="border px-4 py-2"><?= $prodi->nama ?></td>
-
-                                    <?php if (!is_null($prodi->kaprodi)) { ?> 
-                                        <td class="border px-4 py-2"><?= $prodi->kaprodi->namaDepan . ' ' . $prodi->kaprodi->namaBelakang ?></td>
+                                    <td class="border px-4 py-2"><?= $enroll->mahasiswa->nim ?></td>
+                                    <td class="border px-4 py-2"><?= $enroll->mahasiswa->namaDepan . ' ' . $enroll->mahasiswa->namaBelakang ?></td>
+                                    <td class="border px-4 py-2"><?= $enroll->mataKuliah->kode ?></td>
+                                    <td class="border px-4 py-2"><?= $enroll->mataKuliah->nama ?></td>
+                                    <td class="border px-4 py-2"><?= $enroll->semester ?></td>
+                                    
+                                    <?php if (strlen($enroll->nilai) != 0) { ?> 
+                                        <td class="border px-4 py-2"><?= $enroll->nilai ?></td>
                                     <?php } else { ?>
                                         <td class="border px-4 py-2">
                                             <div class="flex justify-center">
@@ -86,31 +96,13 @@
                                             </div>
                                         </td>
                                     <?php } ?>
-                                    
-                                    <td class="border px-4 py-2"><?= $prodi->akreditasi ?></td>
-                                    
-                                    <?php if (!is_null($prodi->jurusan)) { ?> 
-                                        <td class="border px-4 py-2"><?= $prodi->jurusan->nama ?></td>
-                                    <?php } else { ?>
-                                        <td class="border px-4 py-2">
-                                            <div class="flex justify-center">
-                                                <svg class="h-6 w-6 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-                                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
-                                                </svg>
-                                            </div>
-                                        </td>
-                                    <?php } ?>
-
-                                    <!-- total mahasiswa -->
-                                     
-                                    <td class="border px-4 py-2"><?= $prodiService->totalMahasiswaInProdiId($prodi->id) ?></td>
                                     
                                     <td class="border px-4 py-2">
                                         <div class="flex">
-                                            <a href="./ProdiPageEditData.php?id=<?= $prodi->id ?>" class="bg-green-500 hover:bg-green-700 text-slate-50 font-bold py-2 px-3 rounded mr-2">
+                                            <a href="./JurusanPageEditData.php?id=<?= $enroll->id ?>" class="bg-green-500 hover:bg-green-700 text-slate-50 font-bold py-2 px-3 rounded mr-2">
                                                 Edit
                                             </a>
-                                            <a href="./ProdiProsesData.php?act=delete&id=<?= $prodi->id ?>" class="bg-red-500 hover:bg-red-700 text-slate-50 font-bold py-2 px-3 rounded">
+                                            <a href="./JurusanProsesData.php?act=delete&id=<?= $enroll->id ?>" class="bg-red-500 hover:bg-red-700 text-slate-50 font-bold py-2 px-3 rounded">
                                                 Hapus
                                             </a>
                                         </div>
