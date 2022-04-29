@@ -99,10 +99,10 @@ use Modules\EnrollMataKuliah\Entity\EnrollMataKuliahEntity;
                                     
                                     <td class="border px-4 py-2">
                                         <div class="flex">
-                                            <a href="./JurusanPageEditData.php?id=<?= $enroll->id ?>" class="bg-green-500 hover:bg-green-700 text-slate-50 font-bold py-2 px-3 rounded mr-2">
+                                            <a href="./EnrollMataKuliahPageEditData.php?id=<?= $enroll->id ?>" class="bg-green-500 hover:bg-green-700 text-slate-50 font-bold py-2 px-3 rounded mr-2">
                                                 Edit
                                             </a>
-                                            <a href="./JurusanProsesData.php?act=delete&id=<?= $enroll->id ?>" class="bg-red-500 hover:bg-red-700 text-slate-50 font-bold py-2 px-3 rounded">
+                                            <a href="./EnrollMataKuliahProsesData.php?act=delete&id=<?= $enroll->id ?>" class="bg-red-500 hover:bg-red-700 text-slate-50 font-bold py-2 px-3 rounded">
                                                 Hapus
                                             </a>
                                         </div>

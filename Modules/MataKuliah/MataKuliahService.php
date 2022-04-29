@@ -28,7 +28,8 @@ class MataKuliahService
 
     public function totalMahasiswaInMataKuliahId($id)
     {
-        return 1;
+        $total = $this->mataKuliahRepository->totalMahasiswaInMataKuliahId($id);
+        return $total;
     }
 
     public function dosenPengajar($matkulId)

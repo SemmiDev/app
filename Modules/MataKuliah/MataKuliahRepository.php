@@ -12,6 +12,14 @@ class MataKuliahRepository {
         $this->connection = $connection;
     }
 
+    public function totalMahasiswaInMataKuliahId($id)
+    {
+        $statement = $this->connection->prepare("SELECT COUNT(*) FROM enroll_matakuliah WHERE id_matakuliah = :id");
+        $statement->bindParam(":id", $id);
+        $statement->execute();
+        return $statement->fetchColumn();
+    }
+
     public function findDosenPengajar($idMatkul)
     {
         $statement = $this->connection->prepare("SELECT id_dosen FROM mengajar WHERE id_matakuliah = :idMatkul");
