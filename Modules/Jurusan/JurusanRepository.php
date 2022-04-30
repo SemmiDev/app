@@ -32,8 +32,13 @@ class JurusanRepository {
 
     public function save(JurusanEntity $jurusan): JurusanEntity
     {
-        $statement = $this->connection->prepare("INSERT INTO jurusan(nama_jurusan, id_kajur, akreditasi, jenjang, id_fakultas) VALUES (?,?,?,?,?)");
-        $statement->execute([$jurusan->nama, $jurusan->idKajur, $jurusan->akreditasi, $jurusan->jenjang, $jurusan->idFakultas]);
+        $stmt = $this->connection->prepare("SELECT COUNT(*) FROM jurusan");
+        $stmt->execute();
+        $count = $stmt->fetchColumn();
+        $count += 1;
+        
+        $statement = $this->connection->prepare("INSERT INTO jurusan(nama_jurusan, id_kajur, akreditasi, jenjang, id_fakultas, kode) VALUES (?,?,?,?,?,?)");
+        $statement->execute([$jurusan->nama, $jurusan->idKajur, $jurusan->akreditasi, $jurusan->jenjang, $jurusan->idFakultas, $count]);
         return $jurusan;
     }
 
@@ -57,6 +62,7 @@ class JurusanRepository {
             $jurusan->akreditasi = $row['akreditasi'];
             $jurusan->jenjang = $row['jenjang'];
             $jurusan->idFakultas = $row['id_fakultas'];
+            $jurusan->kode = $row['kode'];
             return $jurusan;
         }, $result);
     }
@@ -75,6 +81,7 @@ class JurusanRepository {
                 $jurusan->akreditasi = $row['akreditasi'];
                 $jurusan->jenjang = $row['jenjang'];
                 $jurusan->idFakultas = $row['id_fakultas'];
+                $jurusan->kode = $row['kode'];
                 return $jurusan;
             } else {
                 return null;

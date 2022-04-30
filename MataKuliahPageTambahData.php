@@ -34,7 +34,6 @@
                             return text;
                         }
                     </script>
-                
                 </div>
 
                 <div class="mb-4">

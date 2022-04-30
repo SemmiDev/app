@@ -2,17 +2,51 @@
 
 namespace App\MahasiswaProses;
 
+use Config\Database;
 use Modules\Mahasiswa\Entity\MahasiswaEntity;
 
 require_once './App.php';
+require_once './scripts/generate.php';
 
 $act = $_GET['act'];
 
+function generateNIM($angkatan, $jurusanId, $jalurMasuk) {
+    global $jurusanService;
+    global $mahasiswaService;
+
+    $angkatan = substr($angkatan, -2);
+    $dataJurusan = $jurusanService->findById($jurusanId);
+    $jurusan = $dataJurusan->kode < 10 ? '0' . $dataJurusan->kode : $dataJurusan->kode;
+    switch ($jalurMasuk) {
+        case "SBMPTN" :
+            $jalurMasuk = "01";
+            break;
+        case "SNMPTN" :
+            $jalurMasuk = "02";
+            break;
+        case "Mandiri" :
+            $jalurMasuk = "03";
+            break;
+        case "PBUD" :
+            $jalurMasuk = "04";
+            break;
+        default:
+            $jalurMasuk = "01";
+            break;
+    }
+    
+    $allMhs = $mahasiswaService->findAll();
+    $noMhs = $allMhs[count($allMhs) - 1]->id + 1;
+    $noMhs = $noMhs < 1000 ? str_repeat('0', 4 - strlen($noMhs)) . $noMhs : $noMhs;
+
+    return $angkatan . $jurusan . $jalurMasuk . $noMhs;
+}
+
 if ($act == 'create') {
-    $nim = $_POST['nim'];
     $namaDepan = $_POST['namaDepan'];
+    $jalurMasuk = $_POST['jalur_masuk'];
+    $angkatan = $_POST['angkatan'];
     $namaBelakang = $_POST['namaBelakang'];
-    $email = $_POST['email'];
     $jenisKelamin = $_POST['jenisKelamin'];
     $agama = $_POST['agama'];
     $jenjang = $_POST['jenjang'];
@@ -26,10 +60,10 @@ if ($act == 'create') {
     $dosenId = $_POST['dosen'];
 
     $req = new MahasiswaEntity();
-    $req->nim = $nim;
+    $req->nim = generateNIM($angkatan, $jurusanId, $jalurMasuk);
     $req->namaDepan = $namaDepan;
     $req->namaBelakang = $namaBelakang;
-    $req->email = $email;
+    $req->email = generateEmail($namaDepan, $namaBelakang, $req->nim, 'student');
     $req->jenisKelamin = $jenisKelamin;
     $req->agama = $agama;
     $req->jenjang = $jenjang;
@@ -40,10 +74,14 @@ if ($act == 'create') {
     $req->totalSKS = $totalSks;
     $req->semester = $semester;
     $req->idJurusan = $jurusanId;
+    $req->angkatan = $angkatan;
+    $req->jalurMasuk = $jalurMasuk;
     $req->idProdi = null;
     
     if ($dosenId == "") {
         $req->idDosenPA = null;
+    }else {
+        $req->idDosenPA = $dosenId;
     }
 
     try {
@@ -52,9 +90,14 @@ if ($act == 'create') {
         setcookie('success', $msg, time() + 5);
         header('Location: Mahasiswa.php');
     } catch (\Exception $exception) {
-        $msg = "Gagal menambahkan data $exception";
-        setcookie('error', $msg, time() + 5);
-        header('Location: Mahasiswa.php');
+        if (strpos($exception->getMessage(), 'There is no active transaction') !== false) {
+            setcookie('success', $msg, time() + 5);
+            header('Location: Mahasiswa.php');
+        } else {
+            $msg = "Mahasiswa gagal ditambahkan $exception";
+            setcookie('error', $msg, time() + 5);
+            header('Location: Mahasiswa.php');
+        }
     }
 }
 
@@ -85,10 +128,10 @@ if ($act == 'update-prodi') {
 
 if ($act == 'update') {
     $id = $_POST['id'];
-    $nim = $_POST['nim'];
+    $angkatan = $_POST['angkatan'];
+    $jalur_masuk = $_POST['jalur_masuk'];
     $namaDepan = $_POST['namaDepan'];
     $namaBelakang = $_POST['namaBelakang'];
-    $email = $_POST['email'];
     $jenisKelamin = $_POST['jenisKelamin'];
     $agama = $_POST['agama'];
     $jenjang = $_POST['jenjang'];
@@ -100,15 +143,12 @@ if ($act == 'update') {
     $semester = $_POST['semester'];
     $jurusanId = $_POST['jurusan'];
     $dosenId = $_POST['dosen'];
-    $req->idProdi = null;
 
     try {
         $req = new MahasiswaEntity();
         $req->id = $id;
-        $req->nim = $nim;
         $req->namaDepan = $namaDepan;
         $req->namaBelakang = $namaBelakang;
-        $req->email = $email;
         $req->jenisKelamin = $jenisKelamin;
         $req->agama = $agama;
         $req->jenjang = $jenjang;
@@ -120,6 +160,8 @@ if ($act == 'update') {
         $req->semester = $semester;
         $req->idJurusan = $jurusanId;
         $req->idDosenPA = $dosenId;
+        $req->angkatan = $angkatan;
+        $req->jalurMasuk = $jalur_masuk;
 
         $mahasiswaService->update($req);
         $msg = "Mahasiswa berhasil di update";

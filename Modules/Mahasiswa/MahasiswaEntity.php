@@ -14,6 +14,9 @@ class MahasiswaEntity {
     public $tanggalLahir;
     public $noHP;
     public $alamat;
+    
+    public $angkatan;
+    public $jalurMasuk;
 
     public $status = "aktif";
     public $totalSKS = 0;
@@ -39,6 +42,9 @@ class MahasiswaEntityDetails {
     public $status;
     public $totalSKS;
     public $semester;
+
+    public $angkatan;
+    public $jalurMasuk;
     
     public $idJurusan;
     public $idProdi;
@@ -87,5 +93,8 @@ class MahasiswaEntityDetails {
         $this->status = $mahasiswa->status;
         $this->totalSKS = $mahasiswa->totalSKS;
         $this->semester = $mahasiswa->semester;
+
+        $this->angkatan = $mahasiswa->angkatan;
+        $this->jalurMasuk = $mahasiswa->jalurMasuk;
     }
 }

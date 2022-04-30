@@ -28,7 +28,7 @@
                     <h1 class="text-center">Login</h1>
                 </div>
                 <div class="w-full p-6">
-                    <form class="user" action="LoginProses.php" method="POST">
+                    <form class="user" action="LoginProses.php?act=login" method="POST">
                         <div class="flex flex-wrap mb-6">
                             <label for="email" class="block text-gray-700 text-sm font-bold mb-2">
                                 E-Mail

@@ -5,6 +5,7 @@ namespace Modules\Jurusan\Entity;
 class JurusanEntity {
     public $id;
     public $nama;
+    public $kode;
     public $idKajur;
     public $akreditasi;
     public $jenjang;
@@ -14,6 +15,7 @@ class JurusanEntity {
 class JurusanEntityDetails {
     public $id;
     public $nama;
+    public $kode;
     public $jenjang;
     public $akreditasi;
     
@@ -42,6 +44,7 @@ class JurusanEntityDetails {
 
         $this->id = $jurusan->id;
         $this->nama = $jurusan->nama;
+        $this->kode = $jurusan->kode;
         $this->akreditasi = $jurusan->akreditasi;
         $this->jenjang = $jurusan->jenjang;
     }

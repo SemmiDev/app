@@ -10,6 +10,8 @@ use Modules\Mahasiswa\Entity\MahasiswaEntity;
 use Modules\Mahasiswa\Entity\MahasiswaEntityDetails;
 use Modules\Mahasiswa\Repository\MahasiswaRepository;
 use Modules\Prodi\Repository\ProdiRepository;
+use Modules\User\Entity\UserEntity;
+use Modules\User\Service\UserService;
 
 class MahasiswaService
 {
@@ -17,17 +19,22 @@ class MahasiswaService
     private ProdiRepository $prodiRepository;
     private JurusanRepository $jurusanRepository;
     private DosenRepository $dosenRepository;
+    
+    private UserService $userService;
 
     public function __construct(
         MahasiswaRepository $mahasiswaRepository,
         ProdiRepository $prodiRepository,
         JurusanRepository $jurusanRepository,
-        DosenRepository $dosenRepository
+        DosenRepository $dosenRepository,
+        UserService $userService,
     ) {
         $this->mahasiswaRepository = $mahasiswaRepository;
         $this->prodiRepository = $prodiRepository;
         $this->jurusanRepository = $jurusanRepository;
         $this->dosenRepository = $dosenRepository;
+
+        $this->userService = $userService;
     }
 
     public function totalMahasiswaInJurusanId(int $id) {
@@ -46,9 +53,7 @@ class MahasiswaService
     {
         try {
             Database::beginTransaction();
-
             $this->mahasiswaRepository->save($req);
-
             Database::commitTransaction();
             return $req;
         } catch (\Exception $exception) {

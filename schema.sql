@@ -51,6 +51,7 @@ INSERT INTO fakultas VALUES (3, 'Fakultas Teknik', 4, 3, 2, 1);
 CREATE TABLE IF NOT EXISTS jurusan (
     id_jurusan INT(11) NOT NULL AUTO_INCREMENT,
     nama_jurusan VARCHAR(50) NOT NULL,
+    kode INT(5) NOT NULL,
     id_kajur INT(11) DEFAULT NULL,
     akreditasi VARCHAR(1) NOT NULL,
     jenjang VARCHAR(10) NOT NULL,
@@ -61,19 +62,18 @@ CREATE TABLE IF NOT EXISTS jurusan (
 );
 
 -- dummy data for jurusan
-INSERT INTO jurusan (id_jurusan, nama_jurusan, akreditasi, jenjang, id_fakultas) VALUES (1, 'Teknologi Hasil Perikanan', 'A','S1',1);
-INSERT INTO jurusan (id_jurusan, nama_jurusan, akreditasi, jenjang, id_fakultas) VALUES (2, 'Ilmu Kelautan', 'A','S1', 1);
-INSERT INTO jurusan (id_jurusan, nama_jurusan, akreditasi, jenjang, id_fakultas) VALUES (3, 'Budidaya Perairan', 'A','S1', 1);
+INSERT INTO jurusan (id_jurusan, nama_jurusan, akreditasi, jenjang, id_fakultas, kode) VALUES (1, 'Teknologi Hasil Perikanan', 'A','S1',1, 1);
+INSERT INTO jurusan (id_jurusan, nama_jurusan, akreditasi, jenjang, id_fakultas, kode) VALUES (2, 'Ilmu Kelautan', 'A','S1', 1, 2);
+INSERT INTO jurusan (id_jurusan, nama_jurusan, akreditasi, jenjang, id_fakultas, kode) VALUES (3, 'Budidaya Perairan', 'A','S1', 1, 3);
 
-INSERT INTO jurusan (id_jurusan, nama_jurusan, akreditasi, jenjang, id_fakultas) VALUES (4, 'Sistem Informasi', 'A','S1', 2);
-INSERT INTO jurusan (id_jurusan, nama_jurusan, akreditasi, jenjang, id_fakultas) VALUES (5, 'Manajemen Informatika', 'A','D3', 2);
-INSERT INTO jurusan (id_jurusan, nama_jurusan, akreditasi, jenjang, id_fakultas) VALUES (6, 'Fisika', 'A','S1', 2);
-INSERT INTO jurusan (id_jurusan, nama_jurusan, akreditasi, jenjang, id_fakultas) VALUES (7, 'Kimia', 'A','S1', 2);
+INSERT INTO jurusan (id_jurusan, nama_jurusan, akreditasi, jenjang, id_fakultas, kode) VALUES (4, 'Sistem Informasi', 'A','S1', 2, 4);
+INSERT INTO jurusan (id_jurusan, nama_jurusan, akreditasi, jenjang, id_fakultas, kode) VALUES (5, 'Manajemen Informatika', 'A','D3', 2, 5);
+INSERT INTO jurusan (id_jurusan, nama_jurusan, akreditasi, jenjang, id_fakultas, kode) VALUES (6, 'Fisika', 'A','S1', 2, 6);
+INSERT INTO jurusan (id_jurusan, nama_jurusan, akreditasi, jenjang, id_fakultas, kode) VALUES (7, 'Kimia', 'A','S1', 2, 7);
 
-INSERT INTO jurusan (id_jurusan, nama_jurusan, akreditasi, jenjang, id_fakultas) VALUES (8, 'Teknik Sipil', 'A','S1', 3);
-INSERT INTO jurusan (id_jurusan, nama_jurusan, akreditasi, jenjang, id_fakultas) VALUES (9, 'Teknik Elektro', 'A','S1', 3);
-INSERT INTO jurusan (id_jurusan, nama_jurusan, akreditasi, jenjang, id_fakultas) VALUES (10, 'Teknik Mesin', 'A','S1', 3);
-
+INSERT INTO jurusan (id_jurusan, nama_jurusan, akreditasi, jenjang, id_fakultas, kode) VALUES (8, 'Teknik Sipil', 'A','S1', 3, 8);
+INSERT INTO jurusan (id_jurusan, nama_jurusan, akreditasi, jenjang, id_fakultas, kode) VALUES (9, 'Teknik Elektro', 'A','S1', 3, 9);
+INSERT INTO jurusan (id_jurusan, nama_jurusan, akreditasi, jenjang, id_fakultas, kode) VALUES (10, 'Teknik Mesin', 'A','S1', 3, 10);
 
 CREATE TABLE prodi (
     id_prodi INT(11) NOT NULL AUTO_INCREMENT,
@@ -91,9 +91,11 @@ INSERT INTO prodi (id_prodi, nama_prodi, akreditasi, id_jurusan) VALUES (2, 'Man
 
 CREATE TABLE roles (
     id_role INT(11) NOT NULL AUTO_INCREMENT,
-    role VARCHAR(50) NOT NULL,
+    nama VARCHAR(50) NOT NULL,
     PRIMARY KEY (id_role)
 );
+
+INSERT INTO roles(nama) VALUES ('mahasiswa'),('dosen'),('admin');
 
 CREATE TABLE IF NOT EXISTS users (
     id_user INT(11) NOT NULL AUTO_INCREMENT,
@@ -122,17 +124,19 @@ CREATE TABLE IF NOT EXISTS mahasiswa (
     id_jurusan INT(11) DEFAULT NULL,
     id_prodi INT(11) DEFAULT NULL,
     id_dosen_pa INT(11) DEFAULT NULL,
+    angkatan VARCHAR(10) NOT NULL,
+    jalur_masuk VARCHAR(50) NOT NULL,
     PRIMARY KEY (id_mahasiswa),
     FOREIGN KEY (id_jurusan) REFERENCES jurusan(id_jurusan) ON DELETE SET NULL ON UPDATE CASCADE,
     FOREIGN KEY (id_prodi) REFERENCES prodi(id_prodi) ON DELETE SET NULL ON UPDATE CASCADE,
     FOREIGN KEY (id_dosen_pa) REFERENCES dosen(id_dosen) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
-INSERT INTO mahasiswa (id_mahasiswa, nim, nama_depan, nama_belakang, email, jenis_kelamin, agama, jenjang, tanggal_lahir, no_hp, status, total_sks, semester, alamat, id_jurusan, id_prodi, id_dosen_pa)
-VALUES (1, '123456789', 'Dian', 'Surya', 'dian@gmail.com', 'Laki-Laki', 'Islam', 'S1', '1999-01-01', '08123456789', 'Mahasiswa', '0', '1', 'Jl. Jendral Sudirman No. 1', 1, 1, 1);
+INSERT INTO mahasiswa (id_mahasiswa, nim, nama_depan, nama_belakang, email, jenis_kelamin, agama, jenjang, tanggal_lahir, no_hp, status, total_sks, semester, alamat, id_jurusan, id_prodi, id_dosen_pa, angkatan, jalur_masuk)
+VALUES (1, '123456789', 'Dian', 'Surya', 'dian@gmail.com', 'Laki-Laki', 'Islam', 'S1', '1999-01-01', '08123456789', 'Aktif', '0', '1', 'Jl. Jendral Sudirman No. 1', 1, 1, 1, '2020', 'SNMPTN');
 
-INSERT INTO mahasiswa (id_mahasiswa, nim, nama_depan, nama_belakang, email, jenis_kelamin, agama, jenjang, tanggal_lahir, no_hp, status, total_sks, semester, alamat, id_jurusan, id_prodi, id_dosen_pa)
-VALUES (2, '200311394', 'sammi', 'dev', 'sammidev@gmail.com', 'Laki-Laki', 'Islam', 'S1', '1999-01-01', '08123456789', 'Mahasiswa', '0', '1', 'Jl. Jendral Sudirman No. 1', 1, 2, 3);
+INSERT INTO mahasiswa (id_mahasiswa, nim, nama_depan, nama_belakang, email, jenis_kelamin, agama, jenjang, tanggal_lahir, no_hp, status, total_sks, semester, alamat, id_jurusan, id_prodi, id_dosen_pa, angkatan, jalur_masuk)
+VALUES (2, '200311394', 'sammi', 'dev', 'sammidev@gmail.com', 'Laki-Laki', 'Islam', 'S1', '1999-01-01', '08123456789', 'Aktif', '0', '1', 'Jl. Jendral Sudirman No. 1', 1, 2, 3, '2021', 'SBMPTN');
 
 CREATE TABLE IF NOT EXISTS ruangan (
     id_ruangan INT(11) NOT NULL AUTO_INCREMENT,

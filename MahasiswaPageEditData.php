@@ -19,7 +19,7 @@
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="nim">
                         NIM
                     </label>
-                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="nim" name="nim" type="text" placeholder="Masukkan NIM" value="<?= $dataMahasiswa->nim ?>" required>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="nim" name="nim" type="text" placeholder="Masukkan NIM" value="<?= $dataMahasiswa->nim ?>" disabled>
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="namaDepan">
@@ -37,8 +37,30 @@
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
                         Email
                     </label>
-                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" name="email" type="email" placeholder="Masukkan Email" value="<?= $dataMahasiswa->email ?>" required>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" name="email" type="email" placeholder="Masukkan Email" value="<?= $dataMahasiswa->email ?>" disabled>
                 </div>
+
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="angkatan">
+                        Angkatan
+                    </label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="angkatan" name="angkatan" type="number" placeholder="Angkatan" value="<?= $dataMahasiswa->angkatan ?>" required>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="jalur_masuk">
+                        Jalur Masuk
+                    </label>
+                    <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="jalur_masuk" name="jalur_masuk" required>
+                        <option value="<?= $dataMahasiswa->jalurMasuk ?>"><?= $dataMahasiswa->jalurMasuk ?></option>
+                        <option value="SBMPTN">SBMPTN</option>
+                        <option value="SNMPTN">SNMPTN</option>
+                        <option value="Mandiri">Mandiri</option>
+                        <option value="PBUD">PBUD</option>
+                    </select>
+                </div>
+
+
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="jenisKelamin">
                         Jenis Kelamin

@@ -40,7 +40,7 @@ class MahasiswaRepository {
 
     public function save(MahasiswaEntity $mhs): MahasiswaEntity
     {
-        $statement = $this->connection->prepare("INSERT INTO mahasiswa(nim, nama_depan, nama_belakang, email, jenis_kelamin, agama, jenjang, tanggal_lahir, no_hp, status, total_sks, semester, alamat, id_jurusan, id_prodi, id_dosen_pa) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+        $statement = $this->connection->prepare("INSERT INTO mahasiswa(nim, nama_depan, nama_belakang, email, jenis_kelamin, agama, jenjang, tanggal_lahir, no_hp, status, total_sks, semester, alamat, id_jurusan, id_dosen_pa, angkatan, jalur_masuk) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
         $statement->execute(
             [
                 $mhs->nim,
@@ -57,20 +57,22 @@ class MahasiswaRepository {
                 $mhs->semester,
                 $mhs->alamat,
                 $mhs->idJurusan,   
-                $mhs->idProdi,   
-                $mhs->idDosenPA
+                $mhs->idDosenPA,
+                $mhs->angkatan,
+                $mhs->jalurMasuk,
             ]);
+
+        $statement = $this->connection->prepare("INSERT INTO users(email, password, id_role) VALUES (?,?,?)");
+        $statement->execute([$mhs->email, password_hash('12345678', PASSWORD_BCRYPT), 1]);
         return $mhs;
     }
 
     public function update(MahasiswaEntity $mhs): MahasiswaEntity
     {
-        $statement = $this->connection->prepare("UPDATE mahasiswa SET nim = ? , nama_depan = ?, nama_belakang = ?, email = ?, jenis_kelamin = ?, agama = ?, jenjang = ?, tanggal_lahir = ?, no_hp = ?, status = ?, total_sks = ?, semester = ?, alamat = ?, id_jurusan = ?, id_prodi = ?, id_dosen_pa = ? WHERE id_mahasiswa = ?");
+        $statement = $this->connection->prepare("UPDATE mahasiswa SET nama_depan = ?, nama_belakang = ?, jenis_kelamin = ?, agama = ?, jenjang = ?, tanggal_lahir = ?, no_hp = ?, status = ?, total_sks = ?, semester = ?, alamat = ?, id_jurusan = ?, id_dosen_pa = ?, angkatan = ?, jalur_masuk = ? WHERE id_mahasiswa = ?");
         $statement->execute([
-            $mhs->nim,
             $mhs->namaDepan,
             $mhs->namaBelakang,
-            $mhs->email,
             $mhs->jenisKelamin,
             $mhs->agama,
             $mhs->jenjang,
@@ -81,9 +83,11 @@ class MahasiswaRepository {
             $mhs->semester,
             $mhs->alamat,
             $mhs->idJurusan,
-            $mhs->idProdi,
             $mhs->idDosenPA,
-            $mhs->id]);
+            $mhs->angkatan,
+            $mhs->jalurMasuk,
+            $mhs->id,
+        ]);
         return $mhs;
     }
 
@@ -111,6 +115,8 @@ class MahasiswaRepository {
             $mhs->idJurusan = $row['id_jurusan'];
             $mhs->idProdi = $row['id_prodi'];
             $mhs->idDosenPA = $row['id_dosen_pa'];
+            $mhs->angkatan = $row['angkatan'];
+            $mhs->jalurMasuk = $row['jalur_masuk'];
             return $mhs;
         }, $result);
     }
@@ -140,6 +146,8 @@ class MahasiswaRepository {
                 $mhs->idJurusan = $row['id_jurusan'];
                 $mhs->idProdi = $row['id_prodi'];
                 $mhs->idDosenPA = $row['id_dosen_pa'];
+                $mhs->angkatan = $row['angkatan'];
+                $mhs->jalurMasuk = $row['jalur_masuk'];
                 return $mhs;
             } else {
                 return null;

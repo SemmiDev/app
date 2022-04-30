@@ -39,18 +39,11 @@ class JurusanService
     {
         try {
             Database::beginTransaction();
-
-            $jurusan = new JurusanEntity();
-            $jurusan->nama = $req->nama;
-            $jurusan->idKajur = $req->idKajur;
-            $jurusan->akreditasi = $req->akreditasi;
-            $jurusan->jenjang = $req->jenjang;
-            $jurusan->idFakultas = $req->idFakultas;
             
-            $this->jurusanRepository->save($jurusan);
+            $this->jurusanRepository->save($req);
             
             Database::commitTransaction();
-            return $jurusan;
+            return $req;
         } catch (\Exception $exception) {
             Database::rollbackTransaction();
             throw $exception;

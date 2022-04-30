@@ -4,11 +4,11 @@
     <main role="main" class="w-full h-full flex-grow p-3 overflow-auto mt-4">
         <h1 class="text-3xl md:text-5xl mb-4 font-extrabold" id="home">Tambah Data Mahasiswa</h1>
 
-        <?php 
+        <?php
         require_once './App.php';
-            $dataProdi =    $prodiService->findAll();
-            $dataJurusan = $jurusanService->findAll();
-            $dataDosen = $dosenService->findAll();
+        $dataProdi =    $prodiService->findAll();
+        $dataJurusan = $jurusanService->findAll();
+        $dataDosen = $dosenService->findAll();
         ?>
 
         <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -17,7 +17,7 @@
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="nim">
                         NIM
                     </label>
-                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="nim" name="nim" type="text" placeholder="Masukkan NIM" required>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="nim" name="nim" type="text" placeholder="automatically generated" required disabled>
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="namaDepan">
@@ -35,7 +35,7 @@
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
                         Email
                     </label>
-                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" name="email" type="email" placeholder="Masukkan Email" required>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" name="email" type="email" placeholder="automatically generated" disabled>
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="jenisKelamin">
@@ -46,7 +46,7 @@
                         <option value="Wanita">Wanita</option>
                     </select>
                 </div>
-                
+
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="agama">
                         Agama
@@ -110,6 +110,25 @@
                 </div>
 
                 <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="angkatan">
+                        Angkatan
+                    </label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="angkatan" name="angkatan" type="number" placeholder="Angkatan" value="<?= date('Y') ?>" required>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="jalur_masuk">
+                        Jalur Masuk
+                    </label>
+                    <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="jalur_masuk" name="jalur_masuk" required>
+                        <option value="SBMPTN">SBMPTN</option>
+                        <option value="SNMPTN">SNMPTN</option>
+                        <option value="Mandiri">Mandiri</option>
+                        <option value="PBUD">PBUD</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="totalSks">
                         Total SKS
                     </label>
@@ -120,7 +139,7 @@
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="semester">
                         Semester
                     </label>
-                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="semester" name="semester" type="number" placeholder="Masukkan Semester" value="1"  required>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="semester" name="semester" type="number" placeholder="Masukkan Semester" value="1" required>
                 </div>
 
                 <div class="mb-4">
@@ -133,22 +152,13 @@
                             <option value="<?= $j->id; ?>"><?= $j->nama; ?></option>
                         <?php endforeach; ?>
                     </select>
-
-                    <script>
-                        let value = document.getElementById('jurusan').value;
-                        document.getElementById('jurusan').onchange = function() {
-                            var selectedOption = this.options[this.selectedIndex];
-                            var value = selectedOption.value;
-                            document.cookie = "jurusan=" + value;
-                        };
-                    </script>
                 </div>
 
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="dosen">
                         Dosen PA
                     </label>
-                    
+
                     <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="dosen" name="dosen" required>
                         <option value="">Pilih Dosen PA</option>
                         <?php foreach ($dataDosen as $d) : ?>
@@ -158,12 +168,11 @@
                 </div>
                 <div class="flex items-center justify-between">
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                        Tambahkan
+                        Simpan
                     </button>
                 </div>
             </form>
         </div>
-
     </main>
 </div>
 <?php include('./Layouts/Footer.php'); ?>
