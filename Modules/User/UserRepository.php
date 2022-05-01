@@ -16,7 +16,7 @@ class UserRepository
     public function save(UserEntity $user): UserEntity
     {
         $statement = $this->connection->prepare("INSERT INTO users(email, password, id_role) VALUES (?,?,?)");
-        $statement->execute([$user->nama, $user->password, $user->idRole]);
+        $statement->execute([$user->email, $user->password, $user->idRole]);
         return $user;
     }
 
@@ -43,7 +43,7 @@ class UserRepository
                 $user->id = $row['id_user'];
                 $user->email = $row['email'];
                 $user->password = $row['password'];
-                $user->nama = $row['id_role'];
+                $user->idRole = $row['id_role'];
                 return $user;
             } else {
                 return null;
@@ -64,7 +64,7 @@ class UserRepository
                 $user->id = $row['id_user'];
                 $user->email = $row['email'];
                 $user->password = $row['password'];
-                $user->nama = $row['id_role'];
+                $user->idRole = $row['id_role'];
                 return $user;
             } else {
                 return null;

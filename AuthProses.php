@@ -2,24 +2,34 @@
 
 namespace App\LoginProses;
 
-use EmptyIterator;
 use Modules\User\Entity\UserEntity;
+use Modules\User\Repository\UserRepository;
 
 require_once './App.php';
 
 $act = $_GET['act'];
 
 if ($act == 'login') {
+    $captcha = $_POST['captcha'];
+    $captchaCode = $_COOKIE['CaptchaCode'];
+    
+    if (!password_verify($captcha, $captchaCode)) {
+        $msg = "Captcha Salah";
+        setcookie('error', $msg, time() + 5, '/');
+        header('Location: Login.php');        
+    }
+
     $email = $_POST['email'];
     $password = $_POST['password'];
     $remember = $_POST['remember'];
-
+    
     try {
         $req = new UserEntity();
         $req->email = $email;
         $req->password = $password;
 
-        $userService->register($req);
+        $user = $userService->login($req);
+        $sessionService->create($user->id);
         $msg = "Login berhasil";
         setcookie('success', $msg, time() + 5, '/');
         header('Location: index.php');
@@ -28,4 +38,12 @@ if ($act == 'login') {
         setcookie('error', $msg, time() + 5, '/');
         header('Location: index.php');
     }
+}
+
+
+if ($act == "logout") {
+    $sessionService->destroy();
+    $msg = "Logout berhasil";
+    setcookie('success', $msg, time() + 5, '/');
+    header('Location: Login.php');
 }

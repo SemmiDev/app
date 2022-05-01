@@ -106,6 +106,8 @@ CREATE TABLE IF NOT EXISTS users (
     FOREIGN KEY (id_role) REFERENCES roles(id_role) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
+INSERT INTO users VALUES (1,'admin@admin.unri.ac.id', '$2y$10$o9O0.yM5fq3cZar4w8qMyOnOmzUSSp18rxTRC3Gw7aTLaP2G1zI/K',3);
+
 CREATE TABLE IF NOT EXISTS mahasiswa (
     id_mahasiswa INT(11) NOT NULL AUTO_INCREMENT,
     nim VARCHAR(10) UNIQUE NOT NULL,
@@ -187,3 +189,10 @@ CREATE TABLE IF NOT EXISTS enroll_matakuliah (
     FOREIGN KEY (id_mahasiswa) REFERENCES mahasiswa(id_mahasiswa) ON DELETE SET NULL ON UPDATE CASCADE,
     FOREIGN KEY (id_matakuliah) REFERENCES matakuliah(id_matakuliah) ON DELETE SET NULL ON UPDATE CASCADE
 );
+
+CREATE TABLE sessions(
+    id VARCHAR(255) PRIMARY KEY,
+    user_id INT(11) NOT NULL
+);
+
+ALTER TABLE sessions ADD CONSTRAINT fk_sessions_user FOREIGN KEY (user_id) REFERENCES users(id_user);

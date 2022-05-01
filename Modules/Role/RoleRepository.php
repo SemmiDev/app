@@ -32,7 +32,7 @@ class RoleRepository {
         }, $result);
     }
 
-    public function findById(int $id): ? RoleEntity
+    public function findById($id): ? RoleEntity
     {
         $statement = $this->connection->prepare("SELECT * FROM roles WHERE id_role = ?");
         $statement->execute([$id]);

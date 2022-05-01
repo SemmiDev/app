@@ -53,6 +53,10 @@ require_once __DIR__ . '/Modules/User/UserEntity.php';
 require_once __DIR__ . '/Modules/User/UserRepository.php';
 require_once __DIR__ . '/Modules/User/UserService.php';
 
+require_once __DIR__ . '/Modules/Session/SessionEntity.php';
+require_once __DIR__ . '/Modules/Session/SessionRepository.php';
+require_once __DIR__ . '/Modules/Session/SessionService.php';
+
 use Modules\Fakultas\Repository\FakultasRepository;
 use Modules\Fakultas\Service\FakultasService;
 use Modules\Jurusan\Repository\JurusanRepository;
@@ -68,6 +72,8 @@ use Modules\Prodi\Service\ProdiService;
 use Modules\Role\Repository\RoleRepository;
 use Modules\Ruangan\Repository\RuanganRepository;
 use Modules\Ruangan\Service\RuanganService;
+use Modules\Session\Repository\SessionRepository;
+use Modules\Session\Repository\SessionService;
 use Modules\User\Repository\UserRepository;
 use Modules\User\Service\UserService;
 
@@ -84,10 +90,8 @@ $roleRepository = new RoleRepository(Database::getConnection());
 $userRepository = new UserRepository(Database::getConnection());
 
 $fakultasService = new FakultasService($fakultasRepository, $dosenRepository, $jurusanRepository);
-
 $roleService = new RoleService($roleRepository);
 $userService = new UserService($userRepository, $roleRepository);
-
 $jurusanService = new JurusanService(
     $jurusanRepository, 
     $fakultasRepository,
@@ -100,24 +104,75 @@ $mahasiswaService = new MahasiswaService(
     $dosenRepository,
     $userService);
 $ruanganService = new RuanganService($ruanganRepository);
-
 $mataKuliahService = new MataKuliahService($mataKuliahRepository, $dosenRepository, $jurusanRepository);
-
 $mengajarService = new MengajarService(
     $mengajarRepository,
     $dosenRepository,
     $mataKuliahRepository
 );
-
 $prodiService = new ProdiService(
     $prodiRepository,
     $mahasiswaRepository,
     $dosenRepository,
     $jurusanRepository,
 );
-
 $enrollMataKuliahService = new EnrollMataKuliahService(
     $enrollMataKuliahRepository,
     $mahasiswaRepository,
     $mataKuliahRepository
 );
+$sessionRepository = new SessionRepository(Database::getConnection());
+$sessionService = new SessionService($sessionRepository, $userRepository, $roleRepository);
+
+
+function mustLogin() {
+    global $sessionService;
+
+    $sessDetails = $sessionService->current();
+    if (is_null($sessDetails)) {
+        header('Location: Login.php');
+    }     
+}
+
+function mustSectionAuthorizedInRoles(...$roles) : bool {
+    global $sessionService;
+
+    $sessDetails = $sessionService->current();
+    if (is_null($sessDetails)) {
+        header('Location: Login.php');
+    }
+    
+    $num = 0;
+    foreach ($roles as $role) {
+        if ($role == $sessDetails->role) {
+            $num += 1;
+        }
+    }
+    
+    if ($num == 0) {
+        return false;
+    }
+
+    return true;
+}
+
+
+function mustFullAuthorizedInRoles(...$roles) {
+    global $sessionService;
+
+    $sessDetails = $sessionService->current();
+    if (is_null($sessDetails)) {
+        header('Location: Login.php');
+    }
+    
+    $num = 0;
+    foreach ($roles as $role) {
+        if ($role == $sessDetails->role) {
+            $num += 1;
+        }
+    }
+    
+    if ($num == 0) {
+        header('Location: AccessDenied.php');
+    }
+}

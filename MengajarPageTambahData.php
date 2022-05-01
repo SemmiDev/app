@@ -1,3 +1,10 @@
+<?php
+    require_once './App.php';
+    mustLogin();
+    mustFullAuthorizedInRoles("admin");
+?>
+
+
 <?php include('./Layouts/Header.php'); ?>
 <div class="w-full flex flex-col sm:flex-row flex-grow overflow-hidden">
     <?php include('./Layouts/Navigation.php'); ?>
@@ -5,7 +12,6 @@
         <h1 class="text-3xl md:text-5xl mb-4 font-extrabold" id="home">Tambah Data Mengajar</h1>
 
         <?php
-        require_once './App.php';
         $dataDosen = $dosenService->findAll();
         $dataMataKuliah = $mataKuliahService->findAll();
         ?>

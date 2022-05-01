@@ -48,7 +48,9 @@ class UserService {
             throw new ValidationException('Password salah');
         }
 
-        return new UserEntityDetails($user, $this->roleRepository->findById($user->idRole));
+        $userDetails =  new UserEntityDetails($user, $this->roleRepository->findById($user->idRole));
+        $userDetails->id = $user->id;
+        return $userDetails;
     }
     
     

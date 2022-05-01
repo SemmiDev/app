@@ -82,7 +82,6 @@
                                     <td class="border px-4 py-2"><?= $ruangan->lantai ?></td>
                                     <td class="border px-4 py-2"><?= $ruangan->latitude ?></td>
                                     <td class="border px-4 py-2"><?= $ruangan->longitude ?></td>
-<!--                                    button link to maps -->
                                     <td class="border px-4 py-2">
                                         <a href="https://www.google.com/maps/place/<?= $ruangan->latitude ?>,<?= $ruangan->longitude ?>" target="_blank">
                                             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded">

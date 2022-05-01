@@ -1,7 +1,7 @@
 <?php
   $random_num    = md5(random_bytes(64));
   $captcha_code  = substr($random_num, 0, 6);
-  setcookie("CaptchaCode", $captcha_code, time() + (10 * 60), "/");
+  setcookie('CaptchaCode', password_hash($captcha_code, PASSWORD_BCRYPT), time() + 300, "/");
   $layer = imagecreatetruecolor(168, 37);
   $captcha_bg = imagecolorallocate($layer, 247, 174, 71);
   imagefill($layer, 0, 0, $captcha_bg);

@@ -1,15 +1,16 @@
 <?php
+    require_once './App.php';
+    mustLogin();
+    mustFullAuthorizedInRoles("admin");
+?>
 
-use Modules\EnrollMataKuliah\Entity\EnrollMataKuliahEntity;
-
- include('./Layouts/Header.php'); ?>
+<?php include('./Layouts/Header.php'); ?>
 <div class="w-full flex flex-col sm:flex-row flex-grow overflow-hidden">
     <?php include('./Layouts/Navigation.php'); ?>
     <main role="main" class="w-full h-full flex-grow p-3 overflow-auto mt-4">
         <h1 class="text-3xl md:text-5xl font-extrabold mb-5" id="home">Data Enroll Mata Kuliah</h1>
 
         <?php
-        require_once './App.php';
         $dataEnrollMataKuliah = $enrollMataKuliahService->findAll();
         ?>
 

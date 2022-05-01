@@ -1,0 +1,2 @@
+- authentication [login & change password mechanism] & authorization [role implementation]
+- session impl

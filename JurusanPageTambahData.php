@@ -1,3 +1,10 @@
+<?php
+    require_once './App.php';
+    mustLogin();
+    mustFullAuthorizedInRoles("admin");
+?>
+
+
 <?php include('./Layouts/Header.php'); ?>
 <div class="w-full flex flex-col sm:flex-row flex-grow overflow-hidden">
     <?php include('./Layouts/Navigation.php'); ?>
@@ -6,7 +13,6 @@
         <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
 
                 <?php
-                    require_once './App.php';
                     $dataFakultas = $fakultasService->findAll();
                     $dataDosen = $dosenService->findAll();
                 ?>
