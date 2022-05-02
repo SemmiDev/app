@@ -1,9 +1,8 @@
 <?php
-    require_once './App.php';
-    mustLogin();
-    mustFullAuthorizedInRoles("admin");
+require_once './App.php';
+mustLogin();
+mustFullAuthorizedInRoles("admin");
 ?>
-
 
 <?php include('./Layouts/Header.php'); ?>
 <div class="w-full flex flex-col sm:flex-row flex-grow overflow-hidden">
@@ -82,8 +81,8 @@
                                 <tr>
                                     <td class="border px-4 py-2"><?= $i ?></td>
                                     <td class="border px-4 py-2"><?= $jurusan->nama ?></td>
-                                    
-                                    <?php if (!is_null($jurusan->kajur)) { ?> 
+
+                                    <?php if (!is_null($jurusan->kajur)) { ?>
                                         <td class="border px-4 py-2"><?= $jurusan->kajur->namaDepan . ' ' . $jurusan->kajur->namaBelakang ?></td>
                                     <?php } else { ?>
                                         <td class="border px-4 py-2">
@@ -94,11 +93,11 @@
                                             </div>
                                         </td>
                                     <?php } ?>
-                                    
+
                                     <td class="border px-4 py-2"><?= $jurusan->akreditasi ?></td>
                                     <td class="border px-4 py-2"><?= $jurusan->jenjang ?></td>
 
-                                    <?php if (!is_null($jurusan->fakultas)) { ?> 
+                                    <?php if (!is_null($jurusan->fakultas)) { ?>
                                         <td class="border px-4 py-2"><?= $jurusan->fakultas->nama ?></td>
                                     <?php } else { ?>
                                         <td class="border px-4 py-2">
@@ -109,7 +108,7 @@
                                             </div>
                                         </td>
                                     <?php } ?>
-                                    
+
                                     <td class="border px-4 py-2"><?= $jurusanService->totalMahasiswaInJurusanId($jurusan->id)  . ' orang' ?></td>
                                     <td class="border px-4 py-2">
                                         <div class="flex">

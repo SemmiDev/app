@@ -157,6 +157,42 @@ class MahasiswaRepository {
         }
     }
 
+    public function findByEmail($email): ? MahasiswaEntity
+    {
+        $statement = $this->connection->prepare("SELECT * FROM mahasiswa WHERE email = ?");
+        $statement->execute([$email]);
+
+        try {
+            if ($row = $statement->fetch()) {
+                $mhs = new MahasiswaEntity();
+                $mhs->id = $row['id_mahasiswa'];
+                $mhs->nim = $row['nim'];
+                $mhs->namaDepan = $row['nama_depan'];
+                $mhs->namaBelakang = $row['nama_belakang'];
+                $mhs->email = $row['email'];
+                $mhs->jenisKelamin = $row['jenis_kelamin'];
+                $mhs->agama = $row['agama'];
+                $mhs->jenjang = $row['jenjang'];
+                $mhs->tanggalLahir = $row['tanggal_lahir'];
+                $mhs->noHP = $row['no_hp'];
+                $mhs->stat = $row['status'];
+                $mhs->totalSKS = $row['total_sks'];
+                $mhs->semester = $row['semester'];
+                $mhs->alamat = $row['alamat'];
+                $mhs->idJurusan = $row['id_jurusan'];
+                $mhs->idProdi = $row['id_prodi'];
+                $mhs->idDosenPA = $row['id_dosen_pa'];
+                $mhs->angkatan = $row['angkatan'];
+                $mhs->jalurMasuk = $row['jalur_masuk'];
+                return $mhs;
+            } else {
+                return null;
+            }
+        } finally {
+            $statement->closeCursor();
+        }
+    }
+
     public function delete(int $id): void
     {
         $statement = $this->connection->prepare("DELETE FROM mahasiswa WHERE id_mahasiswa = ?");

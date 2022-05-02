@@ -18,6 +18,8 @@
                 </a>
                 <span class="ml-2 text-gray-600 text-md">Sistem Informasi Akademik <span class="font-bold">Universitas Riau</span></span>
             </div>
+            
+            
             <?php
                 require_once './App.php';
                 if (mustSectionAuthorizedInRoles('admin')) { 
@@ -28,6 +30,13 @@
                     <img src="//cdn.jsdelivr.net/npm/heroicons@1.0.6/outline/logout.svg" class="w-7 sm:mx-2 mx-4 inline" />
                 </a>
             </div>
-            <?php } ?>
+            <?php } else if (mustSectionAuthorizedInRoles('mahasiswa')) {?>
+                <div class="flex items-center">
+                <span class="text-gray-600 text-sm font-bold"> <?= $sessionService->current()->email ?> </span>
+                <a href="../AuthProses.php?act=logout" class="text-gray-600 text-sm no-underline">
+                    <img src="//cdn.jsdelivr.net/npm/heroicons@1.0.6/outline/logout.svg" class="w-7 sm:mx-2 mx-4 inline" />
+                </a>
+            </div>
+            <?php }?>
         </div>
     </header>

@@ -24,22 +24,28 @@
     <div class="flex justify-center mt-10">
         <div class="w-full max-w-sm">
             <?php if (isset($_COOKIE['error'])  && $_COOKIE['error'] != 'empty') : ?>
-                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-5" id="div-error" role="alert">
-                        <strong class="font-bold">Error!</strong>
-                        <span class="block sm:inline"><?= $_COOKIE['error'] ?></span>
-                        <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
-                            <script>
-                                setTimeout(function() {
-                                    document.querySelector('#div-error').remove();
-                                }, 2000);
-                            </script>
-                        </span>
-                    </div>
-                <?php endif; ?>
-                
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-5" id="div-error" role="alert">
+                    <strong class="font-bold">Error!</strong>
+                    <span class="block sm:inline"><?= $_COOKIE['error'] ?></span>
+                    <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+                        <script>
+                            setTimeout(function() {
+                                document.querySelector('#div-error').remove();
+                            }, 2000);
+                        </script>
+                    </span>
+                </div>
+            <?php endif; ?>
+
+
+            <script>
+                document.cookie = 'error=empty';
+                document.cookie = 'success=empty';
+            </script>
+
             <div class="flex flex-col break-words bg-white border border-2 rounded shadow-md">
                 <div class="font-semibold bg-gray-200 text-gray-700 py-3 px-6 mb-0">
-                    <h1 class="text-center">Login</h1>
+                    <h1 class="text-center">Silahkan Login</h1>
                 </div>
                 <div class="w-full p-6">
                     <form class="user" action="AuthProses.php?act=login" method="POST">
@@ -47,7 +53,7 @@
                             <label for="email" class="block text-gray-700 text-sm font-bold mb-2">
                                 E-Mail
                             </label>
-                            <input type="text" name="email" id="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="xxx@student.unri.ac.id">
+                            <input type="text" name="email" id="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="xxxxx@yyyyy.unri.ac.id">
                         </div>
                         <div class="flex flex-wrap mb-6">
                             <label for="password" class="block text-gray-700 text-sm font-bold mb-2">
@@ -57,7 +63,7 @@
                         </div>
                         <div class="flex items-center justify-between mb-6">
                             <div class="w-full">
-                                <input type="text" id="captcha" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Captcha" name="captcha">
+                                <input type="text" id="captcha" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Captcha" name="captcha" required>
                             </div>
 
                             <div class="w-full ml-20">

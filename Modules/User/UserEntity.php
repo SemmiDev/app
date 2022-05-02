@@ -24,6 +24,7 @@ class UserEntityDetails
     public $id;
     public $email;
     public $password;
+    public $user;
 
     public $idRole;
     public $role;

@@ -145,4 +145,28 @@ class MahasiswaService
             throw $exception;
         }
     }
+
+    public function findByEmail($email): ?MahasiswaEntityDetails
+    {
+        try {
+            Database::beginTransaction();
+            $mhs = $this->mahasiswaRepository->findByEmail($email);
+            if ($mhs == null) {
+                throw new ValidationException("email mahasiswa tidak terdaftar");
+            }
+
+            $mhsDetails = new MahasiswaEntityDetails(
+                $mhs,
+                $this->prodiRepository->findById($mhs->idProdi),
+                $this->jurusanRepository->findById($mhs->idJurusan),
+                $this->dosenRepository->findById($mhs->idDosenPA)
+            );
+
+            Database::commitTransaction();
+            return $mhsDetails;
+        } catch (\Exception $exception) {
+            Database::rollbackTransaction();
+            throw $exception;
+        }
+    }
 }

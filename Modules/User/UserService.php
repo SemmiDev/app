@@ -77,4 +77,24 @@ class UserService {
             throw $exception;
         }
     }
+
+    public function updatePasswordDirectly(UserUpdatePassword $req): UserEntity
+    {
+        try {
+            Database::beginTransaction();
+            $user = $this->userRepository->findByEmail($req->email);
+            if ($user == null) {
+                throw new ValidationException("User not found");
+            }
+            
+            $user->password = password_hash($req->newPassword, PASSWORD_BCRYPT);
+            $this->userRepository->update($user);
+
+            Database::commitTransaction();
+            return $user;
+        } catch (\Exception $exception) {
+            Database::rollbackTransaction();
+            throw $exception;
+        }
+    }
 }
