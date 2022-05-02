@@ -6,4 +6,6 @@
 2. MySQL Database
 3. Tailwind CSS 
 
+---
+## Arch
 ![Alt text](./Assets/arch.svg)
