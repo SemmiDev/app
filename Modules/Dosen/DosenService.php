@@ -86,7 +86,37 @@ class DosenService
             Database::beginTransaction();
             $dos = $this->dosenRepository->findById($id);
             if ($dos == null) {
-                throw new ValidationException("id Fakultas tidak ada");
+                throw new ValidationException("id dosen tidak ada");
+            }
+
+            $dosen = new DosenEntity();
+            $dosen->id = $dos->id;
+            $dosen->nip = $dos->nip;
+            $dosen->namaDepan = $dos->namaDepan;
+            $dosen->namaBelakang = $dos->namaBelakang;
+            $dosen->golonganPNS = $dos->golonganPNS;
+            $dosen->status = $dos->status;
+            $dosen->email = $dos->email;
+            $dosen->jenisKelamin = $dos->jenisKelamin;
+            $dosen->noTelp = $dos->noTelp;
+            $dosen->noHP = $dos->noHP;
+            $dosen->alamat = $dos->alamat;
+
+            Database::commitTransaction();
+            return $dosen;
+        } catch (\Exception $exception) {
+            Database::rollbackTransaction();
+            throw $exception;
+        }
+    }
+
+    public function findByEmail($email): ? DosenEntity
+    {
+        try {
+            Database::beginTransaction();
+            $dos = $this->dosenRepository->findByEmail($email);
+            if ($dos == null) {
+                throw new ValidationException("id dosen tidak ada");
             }
 
             $dosen = new DosenEntity();

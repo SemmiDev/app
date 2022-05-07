@@ -88,5 +88,23 @@
         </ul>
     </div>
 </div>
+<?php } else if (mustSectionAuthorizedInRoles("dosen")) { ?>
+    <div class="sm:w-1/5 md:h-1/5 w-full flex-shrink flex-grow-0 p-4 mt-4">
+    <div class="sticky top-0 p-4 bg-gray-100 rounded-xl w-full">
+        <ul class="flex sm:flex-col overflow-hidden content-center justify-between">
+            <li class="py-2 hover:bg-indigo-300 rounded">
+                <a class="truncate" href="D_AccountDetails.php">
+                    <img src="//cdn.jsdelivr.net/npm/heroicons@1.0.6/outline/user.svg" class="w-7 sm:mx-2 mx-4 inline"/>
+                    <span class="hidden sm:inline">Account</span>
+                </a>
+            </li><li class="py-2 hover:bg-indigo-300 rounded">
+                <a class="truncate" href="D_DosenDetails.php">
+                    <img src="//cdn.jsdelivr.net/npm/heroicons@1.0.6/outline/credit-card.svg" class="w-7 sm:mx-2 mx-4 inline"/>
+                    <span class="hidden sm:inline">Biodata</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
 
 <?php } ?>

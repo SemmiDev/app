@@ -14,7 +14,7 @@ class DosenRepository {
 
     public function save(DosenEntity $dosen): DosenEntity
     {
-        $statement = $this->connection->prepare("INSERT INTO dosen(nip,nama_depan,nama_belakang,email,jenis_kelamin, no_telp, no_hp, golongan_pns, 'status', alamat) VALUES (?,?,?,?,?,?,?,?,?,?)");
+        $statement = $this->connection->prepare("INSERT INTO dosen(nip,nama_depan,nama_belakang,email,jenis_kelamin, no_telp, no_hp, golongan_pns, status, alamat) VALUES (?,?,?,?,?,?,?,?,?,?)");
         $statement->execute([
                 $dosen->nip,
                 $dosen->namaDepan,
@@ -27,6 +27,10 @@ class DosenRepository {
                 $dosen->status,
                 $dosen->alamat,
             ]);
+
+        $statement = $this->connection->prepare("INSERT INTO users(email, password, id_role) VALUES (?,?,?)");
+        // default password for new dosen
+        $statement->execute([$dosen->email, password_hash('12345678', PASSWORD_BCRYPT), 2]);
         return $dosen;
     }
 
@@ -97,6 +101,35 @@ class DosenRepository {
             $statement->closeCursor();
         }
     }
+
+    public function findByEmail($email): ? DosenEntity
+    {
+        $statement = $this->connection->prepare("SELECT * FROM dosen WHERE email = ?");
+        $statement->execute([$email]);
+
+        try {
+            if ($row = $statement->fetch()) {
+                $dosen = new DosenEntity();
+                $dosen->id = $row['id_dosen'];
+                $dosen->nip = $row['nip'];
+                $dosen->namaDepan = $row['nama_depan'];
+                $dosen->namaBelakang = $row['nama_belakang'];
+                $dosen->email = $row['email'];
+                $dosen->jenisKelamin = $row['jenis_kelamin'];
+                $dosen->noTelp = $row['no_telp'];
+                $dosen->noHP = $row['no_hp'];
+                $dosen->golonganPNS = $row['golongan_pns'];
+                $dosen->status = $row['status'];
+                $dosen->alamat = $row['alamat'];
+                return $dosen;
+            } else {
+                return null;
+            }
+        } finally {
+            $statement->closeCursor();
+        }
+    }
+
 
     public function delete(int $id): void
     {

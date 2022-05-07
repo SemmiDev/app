@@ -53,7 +53,7 @@
                             <label for="email" class="block text-gray-700 text-sm font-bold mb-2">
                                 E-Mail
                             </label>
-                            <input type="text" name="email" id="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="xxxxx@yyyyy.unri.ac.id">
+                            <input type="text" name="email" id="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="sammi@student.unri.ac.id">
                         </div>
                         <div class="flex flex-wrap mb-6">
                             <label for="password" class="block text-gray-700 text-sm font-bold mb-2">

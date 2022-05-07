@@ -37,6 +37,13 @@
                     <img src="//cdn.jsdelivr.net/npm/heroicons@1.0.6/outline/logout.svg" class="w-7 sm:mx-2 mx-4 inline" />
                 </a>
             </div>
+            <?php } else if (mustSectionAuthorizedInRoles('dosen')) {?>
+                <div class="flex items-center">
+                <span class="text-gray-600 text-sm font-bold"> <?= $sessionService->current()->email ?> </span>
+                <a href="../AuthProses.php?act=logout" class="text-gray-600 text-sm no-underline">
+                    <img src="//cdn.jsdelivr.net/npm/heroicons@1.0.6/outline/logout.svg" class="w-7 sm:mx-2 mx-4 inline" />
+                </a>
+            </div>
             <?php }?>
         </div>
     </header>

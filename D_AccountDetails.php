@@ -4,7 +4,7 @@ use Modules\User\Entity\UserUpdatePassword;
 
 require_once './App.php';
 mustLogin();
-mustFullAuthorizedInRoles("mahasiswa");
+mustFullAuthorizedInRoles("dosen");
 $current = $sessionService->current();
 
 if (isset($_POST['submit'])) {
@@ -25,7 +25,7 @@ if (isset($_POST['submit'])) {
     <?php include('./Layouts/Navigation.php'); ?>
     <main role="main" class="w-full h-full flex-grow p-3 overflow-auto mt-4">
         <div class="table-responsive">
-            <form action="M_AccountDetails.php" method="POST">
+            <form action="D_AccountDetails.php" method="POST">
                 <table class="table-auto w-full font-semibold border-collapse">
                     <tr>
                         <td class="border p-3">Email</td>

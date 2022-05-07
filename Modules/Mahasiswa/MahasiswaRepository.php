@@ -63,6 +63,7 @@ class MahasiswaRepository {
             ]);
 
         $statement = $this->connection->prepare("INSERT INTO users(email, password, id_role) VALUES (?,?,?)");
+        // default password for new mahasiswa
         $statement->execute([$mhs->email, password_hash('12345678', PASSWORD_BCRYPT), 1]);
         return $mhs;
     }
