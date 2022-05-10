@@ -49,9 +49,13 @@
                 document.cookie = 'success=empty';
             </script>
 
-            <div class="flex mb-5">
-                <a href="./MahasiswaPageTambahData.php" class="bg-blue-500 hover:bg-blue-700 text-slate-50 font-bold py-2 px-3 rounded">
-                    Tambah Data
+            <div class="flex justify-start">
+                <a href="./MahasiswaPageTambahData.php">
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Tambah Data</button>
+                </a>
+
+                <a href="./MahasiswaPageImportData.php" class="ml-2">
+                    <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">Import Data</button>
                 </a>
             </div>
 

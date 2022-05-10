@@ -77,17 +77,17 @@ use Modules\Session\Repository\SessionService;
 use Modules\User\Repository\UserRepository;
 use Modules\User\Service\UserService;
 
-$fakultasRepository = new FakultasRepository(Database::getConnection());
-$jurusanRepository = new JurusanRepository(Database::getConnection());
-$dosenRepository = new DosenRepository(Database::getConnection());
-$mahasiswaRepository = new MahasiswaRepository(Database::getConnection());
-$ruanganRepository = new RuanganRepository(Database::getConnection());
-$mataKuliahRepository = new MataKuliahRepository(Database::getConnection());
-$mengajarRepository = new MengajarRepository(Database::getConnection());
-$prodiRepository = new ProdiRepository(Database::getConnection());
-$enrollMataKuliahRepository = new EnrollMataKuliahRepository(Database::getConnection());
-$roleRepository = new RoleRepository(Database::getConnection()); 
-$userRepository = new UserRepository(Database::getConnection());
+$fakultasRepository = new FakultasRepository(Database::getPDOConnection());
+$jurusanRepository = new JurusanRepository(Database::getPDOConnection());
+$dosenRepository = new DosenRepository(Database::getPDOConnection());
+$mahasiswaRepository = new MahasiswaRepository(Database::getPDOConnection());
+$ruanganRepository = new RuanganRepository(Database::getPDOConnection());
+$mataKuliahRepository = new MataKuliahRepository(Database::getPDOConnection());
+$mengajarRepository = new MengajarRepository(Database::getPDOConnection());
+$prodiRepository = new ProdiRepository(Database::getPDOConnection());
+$enrollMataKuliahRepository = new EnrollMataKuliahRepository(Database::getPDOConnection());
+$roleRepository = new RoleRepository(Database::getPDOConnection()); 
+$userRepository = new UserRepository(Database::getPDOConnection());
 
 $fakultasService = new FakultasService($fakultasRepository, $dosenRepository, $jurusanRepository);
 $roleService = new RoleService($roleRepository);
@@ -121,7 +121,7 @@ $enrollMataKuliahService = new EnrollMataKuliahService(
     $mahasiswaRepository,
     $mataKuliahRepository
 );
-$sessionRepository = new SessionRepository(Database::getConnection());
+$sessionRepository = new SessionRepository(Database::getPDOConnection());
 $sessionService = new SessionService($sessionRepository, $userRepository, $roleRepository);
 
 

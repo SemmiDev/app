@@ -16,11 +16,14 @@ class MengajarService
     private DosenRepository $dosenRepository;
     private MataKuliahRepository $mataKuliahRepository;
 
-    public function __construct()
+    public function __construct(
+        MengajarRepository $mengajarRepository,
+        DosenRepository $dosenRepository,
+        MataKuliahRepository $mataKuliahRepository)
     {
-        $this->mengajarRepository = new MengajarRepository(Database::getConnection());
-        $this->dosenRepository = new DosenRepository(Database::getConnection());
-        $this->mataKuliahRepository = new MataKuliahRepository(Database::getConnection());
+        $this->mengajarRepository = $mengajarRepository;
+        $this->dosenRepository = $dosenRepository;
+        $this->mataKuliahRepository = $mataKuliahRepository;
     }
 
     public function create(MengajarEntity $req): MengajarEntity
