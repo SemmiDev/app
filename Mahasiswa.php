@@ -1,7 +1,7 @@
 <?php
-    require_once './App.php';
-    mustLogin();
-    mustFullAuthorizedInRoles("admin");
+require_once './App.php';
+mustLogin();
+mustFullAuthorizedInRoles("admin");
 ?>
 
 <?php include('./Layouts/Header.php'); ?>
@@ -43,22 +43,27 @@
                 </div>
             <?php endif; ?>
 
-
             <script>
                 document.cookie = 'error=empty';
                 document.cookie = 'success=empty';
             </script>
 
-            <div class="flex justify-start">
+            <div class="justify-start">
                 <a href="./MahasiswaPageTambahData.php">
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Tambah Data</button>
                 </a>
 
-                <a href="./MahasiswaPageImportData.php" class="ml-2">
-                    <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">Import Data</button>
+                <a href="./MahasiswaPageUpload.php">
+                    <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">Upload File CSV</button>
                 </a>
-            </div>
 
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-end mt-2">
+                    <form class="w-full sm:w-64" action="./Mahasiswa.php" method="get">
+                        <input type="text" name="search" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" placeholder="Cari...">
+                    </form>
+                </div>
+            </div>
+                
             <?php if (count($dataMhs) == 0) { ?>
                 <div class="bg-green-200 text-slate-900 px-4 py-3 rounded relative mb-5 w-2/3" id="div-error" role="alert">
                     <span class="block sm:inline">Ups! Data Kosong</span>
@@ -142,7 +147,7 @@
                                     </td>
 
                                     <?php if (!is_null($mhs->dosenPA)) { ?>
-                                        <td class="border px-4 py-2"><?= $mhs->dosenPA->namaDepan . ' '. $mhs->dosenPA->namaBelakang ?></td>
+                                        <td class="border px-4 py-2"><?= $mhs->dosenPA->namaDepan . ' ' . $mhs->dosenPA->namaBelakang ?></td>
                                     <?php } else { ?>
                                         <td class="border px-4 py-2">
                                             <div class="flex justify-center">
